@@ -5,7 +5,7 @@ Operational sales dashboard mockup for sales reps, Key Account Managers, regiona
 ## Run
 
 ```bash
-cd /Users/gizemseyid/Documents/New\ project/customerdashboardmockup
+cd /Users/gizemseyid/Documents/New\ project
 python3 -m http.server 5173
 ```
 
