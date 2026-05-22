@@ -500,6 +500,7 @@ function renderPlannerPage(rows) {
   const healthRows = scoped("account_health", rows);
   const events = weeklyPlannerEvents(rows, alerts, healthRows);
   const days = ["Mon 25", "Tue 26", "Wed 27", "Thu 28", "Fri 29"];
+  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   const pendingActions = healthRows
     .filter((item) => item.priority !== "Low")
     .sort((a, b) => ({ High: 0, Medium: 1, Low: 2 }[a.priority] ?? 3) - ({ High: 0, Medium: 1, Low: 2 }[b.priority] ?? 3))
@@ -521,12 +522,21 @@ function renderPlannerPage(rows) {
           </div>
         </div>
         <div class="calendar-grid">
-          ${days.map((day) => `
-            <div class="calendar-day">
-              <div class="day-head">${day}</div>
-              ${events.filter((event) => event.day === day).map((event) => calendarEvent(event)).join("")}
+          <div class="calendar-corner"></div>
+          ${days.map((day) => `<div class="day-head">${day}</div>`).join("")}
+          <div class="calendar-time-grid">
+            <div class="time-gutter">
+              ${hours.map((hour) => `<div class="time-slot-label">${String(hour).padStart(2, "0")}:00</div>`).join("")}
             </div>
-          `).join("")}
+            <div class="calendar-days-grid">
+              ${days.map((day) => `
+                <div class="calendar-day">
+                  ${hours.map(() => `<div class="calendar-hour"></div>`).join("")}
+                  ${events.filter((event) => event.day === day).map((event) => calendarEvent(event)).join("")}
+                </div>
+              `).join("")}
+            </div>
+          </div>
         </div>
       </section>
       <aside class="planner-actions">
@@ -562,27 +572,29 @@ function weeklyPlannerEvents(rows, alerts, healthRows) {
   const mediumRisk = healthRows.find((item) => item.priority === "Medium");
   const firstAlert = alerts[0];
   return [
-    { day: "Mon 25", time: "08:30", type: "team", title: "Weekly sales team call", detail: "Pipeline, supply constraints, rebate gaps", meta: "Regional team" },
-    { day: "Mon 25", time: "10:30", type: "visit", account: byId(highRisk?.account_id) || account(0), title: "Customer visit", detail: highRisk?.next_best_action || "Review account plan", meta: "On-site" },
-    { day: "Mon 25", time: "15:00", type: "action", account: byId(firstAlert?.account_id) || account(1), title: "Follow-up actions", detail: firstAlert?.recommended_action || "Confirm next steps", meta: "CRM update" },
-    { day: "Tue 26", time: "09:00", type: "trip", title: "Territory trip", detail: "Lower Saxony West route", meta: "2 customer stops" },
-    { day: "Tue 26", time: "11:00", type: "visit", account: account(1), title: "Customer visit", detail: "Wheat program review and stock check", meta: "KAM prep required" },
-    { day: "Tue 26", time: "16:00", type: "action", account: account(2), title: "Visit notes update", detail: "Update commitments and next best action", meta: "Due today" },
-    { day: "Wed 27", time: "09:30", type: "team", title: "Supply & allocation sync", detail: "Critical stock, backorders, delivery ETAs", meta: "Ops + sales" },
-    { day: "Wed 27", time: "13:00", type: "visit", account: byId(mediumRisk?.account_id) || account(3), title: "Customer visit", detail: mediumRisk?.next_best_action || "Opportunity review", meta: "Hybrid" },
-    { day: "Thu 28", time: "08:00", type: "trip", title: "Bavaria South trip", detail: "Credit escalation and grape rescue order", meta: "Manager support" },
-    { day: "Thu 28", time: "12:30", type: "visit", account: account(4), title: "Customer visit", detail: "Campaign execution and sell-out feedback", meta: "On-site" },
-    { day: "Thu 28", time: "17:00", type: "action", account: account(4), title: "Customer update", detail: "Submit feedback and stock levels", meta: "Dashboard input" },
-    { day: "Fri 29", time: "09:00", type: "team", title: "Weekly update", detail: "Commitments closed, next week risks", meta: "Sales manager" },
-    { day: "Fri 29", time: "11:30", type: "visit", account: account(5), title: "Customer visit", detail: "Confirm substitute product and order status", meta: "Call" },
-    { day: "Fri 29", time: "14:30", type: "action", title: "Planner clean-up", detail: "Close overdue actions and prepare Monday brief", meta: "Admin" }
+    { day: "Mon 25", time: "08:30", duration: 75, type: "team", title: "Weekly sales team call", detail: "Pipeline, supply constraints, rebate gaps", meta: "Regional team" },
+    { day: "Mon 25", time: "10:30", duration: 120, type: "visit", account: byId(highRisk?.account_id) || account(0), title: "Customer visit", detail: highRisk?.next_best_action || "Review account plan", meta: "On-site" },
+    { day: "Mon 25", time: "15:00", duration: 75, type: "action", account: byId(firstAlert?.account_id) || account(1), title: "Follow-up actions", detail: firstAlert?.recommended_action || "Confirm next steps", meta: "CRM update" },
+    { day: "Tue 26", time: "09:00", duration: 90, type: "trip", title: "Territory trip", detail: "Lower Saxony West route", meta: "2 customer stops" },
+    { day: "Tue 26", time: "11:00", duration: 105, type: "visit", account: account(1), title: "Customer visit", detail: "Wheat program review and stock check", meta: "KAM prep required" },
+    { day: "Tue 26", time: "16:00", duration: 60, type: "action", account: account(2), title: "Visit notes update", detail: "Update commitments and next best action", meta: "Due today" },
+    { day: "Wed 27", time: "09:30", duration: 75, type: "team", title: "Supply & allocation sync", detail: "Critical stock, backorders, delivery ETAs", meta: "Ops + sales" },
+    { day: "Wed 27", time: "13:00", duration: 120, type: "visit", account: byId(mediumRisk?.account_id) || account(3), title: "Customer visit", detail: mediumRisk?.next_best_action || "Opportunity review", meta: "Hybrid" },
+    { day: "Thu 28", time: "08:00", duration: 120, type: "trip", title: "Bavaria South trip", detail: "Credit escalation and grape rescue order", meta: "Manager support" },
+    { day: "Thu 28", time: "12:30", duration: 120, type: "visit", account: account(4), title: "Customer visit", detail: "Campaign execution and sell-out feedback", meta: "On-site" },
+    { day: "Thu 28", time: "17:00", duration: 60, type: "action", account: account(4), title: "Customer update", detail: "Submit feedback and stock levels", meta: "Dashboard input" },
+    { day: "Fri 29", time: "09:00", duration: 75, type: "team", title: "Weekly update", detail: "Commitments closed, next week risks", meta: "Sales manager" },
+    { day: "Fri 29", time: "11:30", duration: 90, type: "visit", account: account(5), title: "Customer visit", detail: "Confirm substitute product and order status", meta: "Call" },
+    { day: "Fri 29", time: "14:30", duration: 90, type: "action", title: "Planner clean-up", detail: "Close overdue actions and prepare Monday brief", meta: "Admin" }
   ];
 }
 
 function calendarEvent(event) {
   const accountAttr = event.account ? ` data-account="${event.account.account_id}"` : "";
+  const top = calendarEventTop(event.time);
+  const height = calendarEventHeight(event.duration || 60);
   return `
-    <button class="calendar-event ${event.type} ${event.account ? "clickable" : ""}"${accountAttr}>
+    <button class="calendar-event ${event.type} ${event.account ? "clickable" : ""}" style="top:${top}px;height:${height}px;"${accountAttr}>
       <time>${event.time}</time>
       <strong>${event.title}</strong>
       ${event.account ? `<span>${event.account.customer}</span>` : ""}
@@ -590,6 +602,15 @@ function calendarEvent(event) {
       <em>${event.meta}</em>
     </button>
   `;
+}
+
+function calendarEventTop(time) {
+  const [hour, minute] = time.split(":").map(Number);
+  return ((hour - 8) * 72) + (minute / 60) * 72 + 6;
+}
+
+function calendarEventHeight(minutes) {
+  return Math.max(48, (minutes / 60) * 72 - 8);
 }
 
 function renderPrepPage(rows) {

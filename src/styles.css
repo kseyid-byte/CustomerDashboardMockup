@@ -761,11 +761,65 @@ button {
 
 .calendar-grid {
   display: grid;
+  grid-template-columns: 58px repeat(5, minmax(0, 1fr));
+  grid-template-rows: 39px auto;
+  min-height: 792px;
+}
+
+.calendar-corner {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: #eef5ff;
+  border-right: 1px solid #d6e2f3;
+  border-bottom: 1px solid #d6e2f3;
+}
+
+.calendar-time-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+}
+
+.day-head {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  padding: 10px 12px;
+  background: #eef5ff;
+  border-right: 1px solid #d6e2f3;
+  border-bottom: 1px solid #d6e2f3;
+  color: #244b8d;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.day-head:last-of-type {
+  border-right: 0;
+}
+
+.time-gutter {
+  border-right: 1px solid #d6e2f3;
+  background: #fbfdff;
+}
+
+.time-slot-label {
+  height: 72px;
+  padding: 7px 8px 0 0;
+  border-bottom: 1px solid #edf2f8;
+  color: #6b778c;
+  font-size: 11px;
+  text-align: right;
+}
+
+.calendar-days-grid {
+  display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  min-height: 620px;
 }
 
 .calendar-day {
+  position: relative;
+  min-height: 792px;
   border-right: 1px solid #e8eef7;
   background: #fff;
 }
@@ -774,16 +828,9 @@ button {
   border-right: 0;
 }
 
-.day-head {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  padding: 10px 12px;
-  background: #eef5ff;
-  border-bottom: 1px solid #d6e2f3;
-  color: #244b8d;
-  font-weight: 700;
-  font-size: 13px;
+.calendar-hour {
+  height: 72px;
+  border-bottom: 1px solid #edf2f8;
 }
 
 .calendar-event,
@@ -798,12 +845,13 @@ button {
 }
 
 .calendar-event {
-  width: calc(100% - 16px);
+  position: absolute;
+  left: 7px;
+  right: 7px;
   display: block;
-  margin: 7px;
-  padding: 8px;
+  padding: 7px 8px;
   border-left-width: 4px;
-  min-height: 104px;
+  overflow: hidden;
 }
 
 .calendar-event:hover,
@@ -824,40 +872,40 @@ button {
   display: block;
   color: #244b8d;
   font-weight: 700;
-  font-size: 12px;
-  margin-bottom: 5px;
+  font-size: 11px;
+  margin-bottom: 3px;
 }
 
 .calendar-event strong {
   display: block;
   color: #111;
-  font-size: 12px;
-  margin-bottom: 3px;
+  font-size: 11px;
+  margin-bottom: 2px;
 }
 
 .calendar-event span {
   display: block;
   color: #244b8d;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 .calendar-event p {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: #536174;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.25;
 }
 
 .calendar-event em {
   color: #7a8699;
-  font-size: 11px;
+  font-size: 10px;
   font-style: normal;
 }
 
 .planner-actions .mini-panel {
-  min-height: 676px;
+  min-height: 846px;
 }
 
 .pending-list {
