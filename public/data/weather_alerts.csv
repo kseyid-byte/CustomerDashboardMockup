@@ -1,0 +1,9 @@
+account_id,territory,crop,weather_event,product_recommendation,risk_level,expected_window,recommended_action
+A1001,Lower Saxony West,Corn,Corn leaf disease pressure rising,Axial Prime,High,Next 7-10 days,Prepare weather-based customer call and stock check
+A1002,North Rhine-Westphalia,Wheat,Wheat stress from low rainfall,Axial Prime,Medium,Next 7-10 days,Prepare weather-based customer call and stock check
+A1003,Saxony-Anhalt,Vegetables,Vegetable fungal pressure elevated,Revus Top,High,Next 7-10 days,Prepare weather-based customer call and stock check
+A1004,Bavaria South,Grapes,Grape mildew alert,Switch Max,High,Next 7-10 days,Prepare weather-based customer call and stock check
+A1005,Baden-Wuerttemberg,Fruit,Fruit pest window expected,Score Flex,Medium,Next 7-10 days,Prepare weather-based customer call and stock check
+A1006,Brandenburg,Potatoes,Potato blight conditions,Amistar Pro,High,Next 7-10 days,Prepare weather-based customer call and stock check
+A1007,Hesse-Thuringia,Wheat,Wheat disease watch,Axial Prime,Medium,Next 7-10 days,Prepare weather-based customer call and stock check
+A1008,Schleswig-Holstein,Corn,Corn emergence stress watch,Axial Prime,Low,Next 7-10 days,Prepare weather-based customer call and stock check

@@ -30,6 +30,11 @@ Expected future Databricks-backed products:
 - `account_health`
 - `annual_plan`
 - `last_year_sales`
+- `sell_out`
+- `data_freshness`
+- `rebate_tiers`
+- `next_best_actions`
+- `weather_alerts`
 
 ## Included Actions
 

@@ -11,7 +11,12 @@ const csvProducts = {
   waterfall: "./public/data/waterfall.csv",
   account_health: "./public/data/account_health.csv",
   annual_plan: "./public/data/annual_plan.csv",
-  last_year_sales: "./public/data/last_year_sales.csv"
+  last_year_sales: "./public/data/last_year_sales.csv",
+  sell_out: "./public/data/sell_out.csv",
+  data_freshness: "./public/data/data_freshness.csv",
+  rebate_tiers: "./public/data/rebate_tiers.csv",
+  next_best_actions: "./public/data/next_best_actions.csv",
+  weather_alerts: "./public/data/weather_alerts.csv"
 };
 
 const state = {
@@ -200,7 +205,7 @@ function varianceClass(value) {
 }
 
 function severityClass(value) {
-  if (["High", "Critical", "Overdue"].includes(value)) return "bad";
+  if (["High", "Critical", "Overdue", "Stale"].includes(value)) return "bad";
   if (["Medium", "Low", "Watch", "At risk"].includes(value)) return "warn";
   return "good";
 }
@@ -318,6 +323,8 @@ function renderOverviewPage(rows, metrics) {
       </div>
     </div>
     <div class="overview-card-grid">
+      ${accountHeatMapPanel(rows)}
+      ${weatherDrivenAlertsPanel(rows)}
       ${miniWaterfall(rows)}
       ${miniOpportunity(rows)}
       ${miniAccountHealth(rows)}
@@ -630,6 +637,15 @@ function renderPrepPage(rows) {
       ${productSignalPanel("Products increasing", increasing, "growth")}
       ${countryBenchmarkPanel(trends)}
     </div>
+    <div class="prep-signal-grid">
+      ${sellInSellOutPanel(rows)}
+      ${rebateTierPanel(rows)}
+      ${nextBestActionPanel(rows)}
+    </div>
+    <div class="prep-signal-grid prep-two-one-grid">
+      ${dataFreshnessPanel(rows)}
+      ${customerPrepSummaryPanel(rows)}
+    </div>
     <div class="prep-grid">
       <div class="mini-panel"><h3>Talking points</h3><div class="talking-points">${opportunities.map((item) => `<button class="clickable" data-account="${item.account_id}"><strong>${byId(item.account_id).customer}</strong><span>${item.next_step}</span></button>`).join("")}</div></div>
       <div class="mini-panel"><h3>Open commitments</h3><table class="mini-table micro"><tbody>${orders.map((item) => `<tr class="clickable" data-account="${item.account_id}"><td>${byId(item.account_id).customer}</td><td>${item.commitment_due}</td><td>${item.commitment_status}</td></tr>`).join("")}</tbody></table></div>
@@ -726,6 +742,240 @@ function countryBenchmarkPanel(products) {
           `).join("")}
         </tbody>
       </table>
+    </div>
+  `;
+}
+
+function accountHeatMapPanel(rows) {
+  const healthRows = scoped("account_health", rows);
+  const weatherAlerts = scoped("weather_alerts", rows);
+  const accounts = Array.from(accountIdsInScope(rows)).map((id) => {
+    const account = byId(id);
+    const accountRows = rows.filter((row) => row.account_id === id);
+    const sales = accountRows.reduce((sum, row) => sum + row.sales_actual, 0);
+    const target = accountRows.reduce((sum, row) => sum + row.sales_target, 0);
+    const health = healthRows.find((item) => item.account_id === id);
+    const weather = weatherAlerts.find((item) => item.account_id === id);
+    return { account, sales, target, health, weather };
+  }).filter((item) => item.account).sort((a, b) => (a.health?.health_score || 100) - (b.health?.health_score || 100)).slice(0, 8);
+
+  return `
+    <div class="mini-panel heat-map-panel">
+      <div class="panel-title-row">
+        <h3>Account heat map</h3>
+        <span>${accounts.filter((item) => ["Critical", "At risk"].includes(item.health?.health_status)).length} risk</span>
+      </div>
+      <div class="heat-map-grid">
+        ${accounts.map((item) => {
+          const attainment = item.target ? item.sales / item.target : 0;
+          const status = item.health?.health_status || "Watch";
+          return `
+            <button class="heat-cell clickable ${healthClass(status)}" data-account="${item.account.account_id}">
+              <strong>${item.account.customer}</strong>
+              <small>${item.account.territory}</small>
+              <div>
+                <span>${pct(attainment)}</span>
+                <em>${status}</em>
+              </div>
+              <p>${item.weather?.weather_event || item.health?.next_best_action || "No active signal"}</p>
+            </button>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function weatherDrivenAlertsPanel(rows) {
+  const alerts = scoped("weather_alerts", rows)
+    .sort((a, b) => ({ High: 0, Medium: 1, Low: 2 }[a.risk_level] ?? 3) - ({ High: 0, Medium: 1, Low: 2 }[b.risk_level] ?? 3))
+    .slice(0, 5);
+
+  return `
+    <div class="mini-panel weather-alert-panel">
+      <div class="panel-title-row">
+        <h3>Weather-driven alerts</h3>
+        <span>${alerts.filter((item) => item.risk_level === "High").length} high</span>
+      </div>
+      <div class="weather-alert-list">
+        ${alerts.map((item) => {
+          const account = byId(item.account_id);
+          return `
+            <button class="weather-alert-row clickable" data-account="${item.account_id}">
+              <span class="health-badge ${severityClass(item.risk_level)}">${item.risk_level}</span>
+              <div>
+                <strong>${account.customer}</strong>
+                <small>${item.territory} · ${item.crop} · ${item.expected_window}</small>
+                <p>${item.weather_event}</p>
+                <em>${item.product_recommendation}: ${item.recommended_action}</em>
+              </div>
+            </button>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function sellInSellOutPanel(rows) {
+  const data = Object.values(scoped("sell_out", rows).reduce((acc, row) => {
+    acc[row.product] ??= {
+      product: row.product,
+      crop: row.crop,
+      sellIn: 0,
+      sellOut: 0,
+      stock: 0,
+      cover: 0,
+      count: 0,
+      trend: row.sell_out_trend,
+      latest: row.last_submission_date
+    };
+    acc[row.product].sellIn += row.sell_in_value;
+    acc[row.product].sellOut += row.sell_out_value;
+    acc[row.product].stock += row.channel_stock_units;
+    acc[row.product].cover += row.weeks_of_cover;
+    acc[row.product].count += 1;
+    acc[row.product].latest = row.last_submission_date > acc[row.product].latest ? row.last_submission_date : acc[row.product].latest;
+    if (row.sell_out_trend === "Declining") acc[row.product].trend = "Declining";
+    return acc;
+  }, {})).sort((a, b) => b.sellIn - a.sellIn).slice(0, 5);
+
+  return `
+    <div class="mini-panel product-signal-panel">
+      <h3>Sell-in / sell-out</h3>
+      <table class="mini-table micro">
+        <thead><tr><th>Product</th><th>Sell-in</th><th>Sell-out</th><th>Ratio</th><th>Stock</th></tr></thead>
+        <tbody>
+          ${data.map((item) => {
+            const ratio = item.sellIn ? item.sellOut / item.sellIn : 0;
+            return `
+              <tr>
+                <td><strong>${item.product}</strong><small>${item.crop} · ${item.trend} · ${item.latest}</small></td>
+                <td>${formatMoney(item.sellIn)}</td>
+                <td>${formatMoney(item.sellOut)}</td>
+                <td class="${ratio >= 0.9 ? "pos" : "neg"}">${pct(ratio)}</td>
+                <td>${formatNumber(item.stock)}<small>${Math.round(item.cover / item.count)} wks cover</small></td>
+              </tr>
+            `;
+          }).join("") || `<tr><td colspan="5">No sell-out rows in current scope.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function rebateTierPanel(rows) {
+  const tiers = scoped("rebate_tiers", rows)
+    .sort((a, b) => a.gap_to_next_tier - b.gap_to_next_tier)
+    .slice(0, 5);
+
+  return `
+    <div class="mini-panel product-signal-panel rebate-panel">
+      <h3>Rebate tier tracker</h3>
+      <div class="rebate-list">
+        ${tiers.map((item) => {
+          const account = byId(item.account_id);
+          const progress = item.next_tier_threshold ? Math.min(item.year_to_date_sales / item.next_tier_threshold, 1) : 0;
+          return `
+            <button class="rebate-row clickable" data-account="${item.account_id}">
+              <div>
+                <strong>${account.customer}</strong>
+                <small>${item.current_tier} ${item.current_rebate_pct}% to ${item.next_tier} ${item.next_rebate_pct}%</small>
+              </div>
+              <div class="rebate-progress"><span style="width:${Math.round(progress * 100)}%"></span></div>
+              <p><b>${formatMoney(item.gap_to_next_tier)}</b> gap · ${formatMoney(item.expected_incremental_rebate)} incremental rebate</p>
+              <em>${item.recommended_offer}</em>
+            </button>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function nextBestActionPanel(rows) {
+  const actions = scoped("next_best_actions", rows)
+    .sort((a, b) => ({ High: 0, Medium: 1, Low: 2 }[a.priority] ?? 3) - ({ High: 0, Medium: 1, Low: 2 }[b.priority] ?? 3))
+    .slice(0, 5);
+
+  return `
+    <div class="mini-panel product-signal-panel next-action-panel">
+      <h3>Next Best Action Engine</h3>
+      <div class="next-action-list">
+        ${actions.map((item) => {
+          const account = byId(item.account_id);
+          return `
+            <button class="next-action-row clickable" data-account="${item.account_id}">
+              <span class="health-badge ${severityClass(item.priority)}">${item.priority}</span>
+              <div>
+                <strong>${account.customer}</strong>
+                <small>${item.trigger} · ${item.owner} · ${item.due_date}</small>
+                <p>${item.next_best_action}</p>
+                <em>${formatMoney(item.commercial_impact)} impact · ${item.status}</em>
+              </div>
+            </button>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function dataFreshnessPanel(rows) {
+  const freshness = scoped("data_freshness", rows);
+  const statusCounts = freshness.reduce((acc, row) => {
+    acc[row.freshness_status] = (acc[row.freshness_status] || 0) + 1;
+    return acc;
+  }, {});
+  const rowsToShow = freshness
+    .sort((a, b) => b.latency_hours - a.latency_hours)
+    .slice(0, 6);
+
+  return `
+    <div class="mini-panel product-signal-panel freshness-panel">
+      <div class="panel-title-row">
+        <h3>Data freshness</h3>
+        <span>${statusCounts.Stale || 0} stale</span>
+      </div>
+      <div class="freshness-summary">
+        ${["Fresh", "Watch", "Stale"].map((status) => `<div><strong>${statusCounts[status] || 0}</strong><span>${status}</span></div>`).join("")}
+      </div>
+      <table class="mini-table micro">
+        <tbody>
+          ${rowsToShow.map((item) => `
+            <tr class="clickable" data-account="${item.account_id}">
+              <td><strong>${byId(item.account_id).customer}</strong><small>${item.data_domain} · ${item.source_system}</small></td>
+              <td><span class="health-badge ${severityClass(item.freshness_status)}">${item.freshness_status}</span><small>${item.latency_hours}h</small></td>
+              <td>${item.recommended_fix}<small>${item.owner}</small></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function customerPrepSummaryPanel(rows) {
+  const sellOut = scoped("sell_out", rows);
+  const freshness = scoped("data_freshness", rows);
+  const actions = scoped("next_best_actions", rows);
+  const sellInValue = sellOut.reduce((sum, row) => sum + row.sell_in_value, 0);
+  const sellOutValue = sellOut.reduce((sum, row) => sum + row.sell_out_value, 0);
+  const staleCount = freshness.filter((row) => row.freshness_status === "Stale").length;
+  const highActions = actions.filter((row) => row.priority === "High").length;
+
+  return `
+    <div class="mini-panel prep-summary-panel">
+      <h3>Customer prep brief</h3>
+      <div class="prep-summary-grid">
+        <div><span>Sell-out ratio</span><strong>${pct(sellInValue ? sellOutValue / sellInValue : 0)}</strong><small>${formatMoney(sellOutValue)} sell-out</small></div>
+        <div><span>Open NBA</span><strong>${actions.length}</strong><small>${highActions} high priority</small></div>
+        <div><span>Data issues</span><strong>${staleCount}</strong><small>stale customer feeds</small></div>
+      </div>
+      <div class="prep-summary-note">
+        <strong>Meeting focus</strong>
+        <p>Validate sell-out movement, ask for missing customer data, close rebate tier gaps, and agree the next best action before leaving the account meeting.</p>
+      </div>
     </div>
   `;
 }

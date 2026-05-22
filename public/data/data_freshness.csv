@@ -1,0 +1,17 @@
+account_id,data_domain,source_system,last_refresh,freshness_status,latency_hours,missing_fields,recommended_fix,owner
+A1001,Sell-out,Customer portal,2026-05-20 08:00,Fresh,12,none,No action required,Amira Keller
+A1001,Inventory,Customer stock file,2026-05-21 07:30,Fresh,10,none,No action required,Amira Keller
+A1002,Sell-out,Customer portal,2026-05-19 08:00,Watch,38,stock_units;grower_segment,Ask customer to upload latest sell-out and stock file,Jonas Frei
+A1002,Inventory,Customer stock file,2026-05-20 07:30,Watch,42,batch_number,Validate stock movement before visit,Jonas Frei
+A1003,Sell-out,Customer portal,2026-05-18 08:00,Stale,86,stock_units;grower_segment,Ask customer to upload latest sell-out and stock file,Noah Baumann
+A1003,Inventory,Customer stock file,2026-05-19 07:30,Watch,42,none,Validate stock movement before visit,Noah Baumann
+A1004,Sell-out,Customer portal,2026-05-17 08:00,Stale,86,none,Ask customer to upload latest sell-out and stock file,Elena Ricci
+A1004,Inventory,Customer stock file,2026-05-21 07:30,Fresh,10,batch_number,No action required,Elena Ricci
+A1005,Sell-out,Customer portal,2026-05-20 08:00,Fresh,12,stock_units;grower_segment,No action required,Mila Dubois
+A1005,Inventory,Customer stock file,2026-05-20 07:30,Watch,42,none,Validate stock movement before visit,Mila Dubois
+A1006,Sell-out,Customer portal,2026-05-19 08:00,Watch,38,stock_units;grower_segment,Ask customer to upload latest sell-out and stock file,Max Schneider
+A1006,Inventory,Customer stock file,2026-05-19 07:30,Watch,42,batch_number,Validate stock movement before visit,Max Schneider
+A1007,Sell-out,Customer portal,2026-05-18 08:00,Stale,86,none,Ask customer to upload latest sell-out and stock file,Jonas Frei
+A1007,Inventory,Customer stock file,2026-05-21 07:30,Fresh,10,none,No action required,Jonas Frei
+A1008,Sell-out,Customer portal,2026-05-17 08:00,Stale,86,stock_units;grower_segment,Ask customer to upload latest sell-out and stock file,Amira Keller
+A1008,Inventory,Customer stock file,2026-05-20 07:30,Watch,42,batch_number,Validate stock movement before visit,Amira Keller

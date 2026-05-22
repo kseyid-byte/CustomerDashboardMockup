@@ -1,0 +1,9 @@
+account_id,current_tier,current_rebate_pct,next_tier,next_rebate_pct,year_to_date_sales,next_tier_threshold,gap_to_next_tier,expected_incremental_rebate,recommended_offer
+A1001,Bronze,3,Silver,4.1,7783903,9000000,1216097,99000,Bundle priority products to close tier gap
+A1002,Bronze,3,Silver,4.1,7193758,9000000,1806242,99000,Bundle priority products to close tier gap
+A1003,Bronze,3,Silver,4.1,6558178,9000000,2441822,99000,Bundle priority products to close tier gap
+A1004,Bronze,3,Silver,4.1,6214909,9000000,2785091,99000,Bundle priority products to close tier gap
+A1005,Bronze,3,Silver,4.1,7073567,9000000,1926433,99000,Bundle priority products to close tier gap
+A1006,Bronze,3,Silver,4.1,5530293,9000000,3469707,99000,Bundle priority products to close tier gap
+A1007,Bronze,3,Silver,4.1,7652410,9000000,1347590,99000,Bundle priority products to close tier gap
+A1008,Bronze,3,Silver,4.1,5654816,9000000,3345184,99000,Bundle priority products to close tier gap
