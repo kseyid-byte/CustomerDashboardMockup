@@ -1,0 +1,17 @@
+opportunity_id,account_id,title,stage,expected_value,probability,next_step,owner,due_date
+P7200,A1001,Axial Prime Corn growth package,Discovery,1422807,0.46,Prepare Lower Saxony West account scenario and rebate ask,Amira Keller,2026-06-03
+P7201,A1001,Elatus Plus Wheat growth package,Negotiation,963837,0.54,Prepare Lower Saxony West account scenario and rebate ask,Amira Keller,2026-06-04
+P7202,A1002,Elatus Plus Wheat growth package,Proposal,1239219,0.62,Prepare North Rhine-Westphalia account scenario and rebate ask,Jonas Frei,2026-06-05
+P7203,A1002,Axial Prime Corn growth package,Discovery,844505,0.70,Prepare North Rhine-Westphalia account scenario and rebate ask,Jonas Frei,2026-06-06
+P7204,A1003,Revus Top Vegetables growth package,Negotiation,1028093,0.38,Prepare Saxony-Anhalt account scenario and rebate ask,Noah Baumann,2026-06-07
+P7205,A1003,Score Flex Fruit growth package,Proposal,789428,0.46,Prepare Saxony-Anhalt account scenario and rebate ask,Noah Baumann,2026-06-08
+P7206,A1004,Switch Max Grapes growth package,Discovery,1083169,0.54,Prepare Bavaria South account scenario and rebate ask,Elena Ricci,2026-06-09
+P7207,A1004,Score Flex Fruit growth package,Negotiation,752711,0.62,Prepare Bavaria South account scenario and rebate ask,Elena Ricci,2026-06-10
+P7208,A1005,Score Flex Fruit growth package,Proposal,1303475,0.70,Prepare Baden-Wuerttemberg account scenario and rebate ask,Mila Dubois,2026-06-11
+P7209,A1005,Revus Top Vegetables growth package,Discovery,715993,0.38,Prepare Baden-Wuerttemberg account scenario and rebate ask,Mila Dubois,2026-06-12
+P7210,A1006,Amistar Pro Potatoes growth package,Negotiation,963837,0.46,Prepare Brandenburg account scenario and rebate ask,Max Schneider,2026-06-13
+P7211,A1006,Axial Prime Corn growth package,Proposal,679276,0.54,Prepare Brandenburg account scenario and rebate ask,Max Schneider,2026-06-14
+P7212,A1007,Elatus Plus Wheat growth package,Discovery,1395269,0.62,Prepare Hesse-Thuringia account scenario and rebate ask,Jonas Frei,2026-06-15
+P7213,A1007,Axial Prime Corn growth package,Negotiation,862864,0.70,Prepare Hesse-Thuringia account scenario and rebate ask,Jonas Frei,2026-06-16
+P7214,A1008,Axial Prime Corn growth package,Proposal,991375,0.38,Prepare Schleswig-Holstein account scenario and rebate ask,Amira Keller,2026-06-17
+P7215,A1008,Elatus Plus Wheat growth package,Discovery,697634,0.46,Prepare Schleswig-Holstein account scenario and rebate ask,Amira Keller,2026-06-18

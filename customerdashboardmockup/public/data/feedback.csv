@@ -1,0 +1,4 @@
+feedback_id,account_id,date,submitted_by,topic,comment,status
+F1001,A1002,2026-05-18,Jonas Frei,Product feedback,Customer asked for clearer wheat program comparison,Reviewed
+F1002,A1004,2026-05-19,Elena Ricci,Stock feedback,Distributor needs earlier visibility on allocation,Open
+F1003,A1006,2026-05-20,Mila Dubois,Service feedback,Urgent orders need better delivery ETA,Open

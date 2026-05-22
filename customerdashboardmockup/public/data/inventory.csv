@@ -1,0 +1,9 @@
+account_id,product,stock_units,days_of_cover,reorder_point,stock_status,last_stock_update
+A1001,Axial Prime,312,18,180,Healthy,2026-05-21
+A1002,Elatus Plus,94,7,130,Low,2026-05-20
+A1003,Revus Top,156,16,90,Healthy,2026-05-21
+A1004,Switch Max,61,5,120,Critical,2026-05-19
+A1005,Score Flex,245,22,140,Healthy,2026-05-21
+A1006,Amistar Pro,52,4,110,Critical,2026-05-20
+A1007,Elatus Plus,188,12,160,Watch,2026-05-21
+A1008,Axial Prime,79,6,100,Low,2026-05-19

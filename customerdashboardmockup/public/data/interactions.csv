@@ -1,0 +1,9 @@
+interaction_id,account_id,type,date,owner,summary,outcome
+I5001,A1001,Visit,2026-05-17,Amira Keller,Reviewed season volume and stock position,Next visit planned
+I5002,A1002,Call,2026-05-18,Jonas Frei,Discussed under-target wheat volume,Needs technical support
+I5003,A1003,Visit,2026-05-16,Noah Baumann,Walked promotion calendar,Opportunity advanced
+I5004,A1004,Email,2026-05-19,Elena Ricci,Requested credit review and delivery status,Pending response
+I5005,A1005,Visit,2026-05-20,Mila Dubois,Confirmed fruit campaign material,Committed
+I5006,A1006,Call,2026-05-20,Mila Dubois,Warned about critical stock position,Escalated
+I5007,A1007,Visit,2026-05-21,Jonas Frei,Reviewed order flow and forecast,Next visit planned
+I5008,A1008,Email,2026-05-21,Amira Keller,Backorder update requested,Pending response

@@ -1,0 +1,7 @@
+alert_id,account_id,severity,category,message,recommended_action,status
+R3001,A1002,Medium,Performance,Sales are 10 percent below Q2 target,Create recovery plan,Open
+R3002,A1004,High,Credit,Credit usage above 79 percent with overdue commitment,Escalate credit review,Open
+R3003,A1006,High,Stock,Critical stock and overdue commitment,Request urgent allocation,Open
+R3004,A1008,Medium,Order,Backorder may affect corn program,Confirm substitute product,Open
+R3005,A1001,Low,Weather,Weather creates upside opportunity for Axial Prime,Offer bundle proposal,Open
+R3006,A1003,Medium,Weather,High disease pressure supports Revus Top demand,Confirm replenishment,Open

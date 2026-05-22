@@ -1,0 +1,9 @@
+account_id,customer,region,territory,sales_rep,kam,channel,crop,segment,credit_limit,credit_used,health_score,lat,lon
+A1001,AGRAVIS Pflanzenschutz Nord,North,Lower Saxony West,Amira Keller,Luca Meier,Wholesale,Corn,Strategic,9500000,6120000,88,52.3759,9.732
+A1002,Raiffeisen Waren NRW,West,North Rhine-Westphalia,Jonas Frei,Luca Meier,Wholesale,Wheat,Growth,7200000,5410000,73,51.5136,7.4653
+A1003,BayWa Agrar Ost,East,Saxony-Anhalt,Noah Baumann,Sara Rossi,Retailer,Vegetables,Strategic,5800000,2970000,81,51.4969,11.9688
+A1004,BayWa Crop Protection Bayern,South,Bavaria South,Elena Ricci,Sara Rossi,Distributor,Grapes,Growth,6400000,5110000,64,48.1351,11.582
+A1005,ZG Raiffeisen Pflanzenschutz,South,Baden-Wuerttemberg,Mila Dubois,Theo Hartmann,Wholesale,Fruit,Core,8200000,3840000,91,48.7758,9.1829
+A1006,Hauptgenossenschaft Brandenburg,East,Brandenburg,Max Schneider,Theo Hartmann,Retailer,Potatoes,Core,5100000,4220000,58,52.3906,13.0645
+A1007,RWZ Agrar Mitte,Central,Hesse-Thuringia,Jonas Frei,Luca Meier,Distributor,Wheat,Strategic,9000000,6560000,77,50.1109,8.6821
+A1008,Raiffeisen Schleswig-Holstein,North,Schleswig-Holstein,Amira Keller,Luca Meier,Wholesale,Corn,Core,4700000,3060000,69,54.3233,10.1228

@@ -1,0 +1,9 @@
+account_id,health_status,health_score,rep_action_status,next_best_action,manager_recommendation,priority,due_date,owner_role
+A1001,Healthy,88,Visit planned,Protect volume and propose bundle extension,Review rebate threshold and approve stretch target,Medium,2026-05-29,KAM
+A1002,At risk,73,Recovery plan needed,Schedule wheat program review and agronomist call,Coach rep on gap-to-plan recovery and confirm pricing guardrails,High,2026-05-24,Sales Manager
+A1003,Healthy,81,Opportunity advancing,Confirm replenishment window and disease-pressure campaign,Support cross-sell case with Customer 360 evidence,Medium,2026-05-30,KAM
+A1004,Critical,64,Credit escalation open,Resolve credit exposure before rescue order confirmation,Escalate credit decision and align on exception approval,High,2026-05-23,Sales Manager
+A1005,Healthy,91,Campaign committed,Lock fruit campaign execution and referral plan,Monitor upside and protect margin discipline,Low,2026-06-01,KAM
+A1006,Critical,58,Urgent allocation needed,Confirm potato stock allocation and delivery ETA,Prioritize supply allocation and unblock overdue commitment,High,2026-05-23,Sales Manager
+A1007,Watch,77,Forecast review planned,Validate order forecast and wheat volume risk,Review volume forecast and approve account action plan,Medium,2026-05-30,KAM
+A1008,At risk,69,Backorder follow-up needed,Confirm substitute product and customer communication,Check backorder impact and support substitution decision,Medium,2026-05-24,Sales Manager

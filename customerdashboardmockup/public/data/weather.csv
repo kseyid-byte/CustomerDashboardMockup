@@ -1,0 +1,9 @@
+account_id,station,condition,temp_c,rain_mm_7d,risk_signal,signal_strength,updated_at
+A1001,Hanover,Showers,18,31,Corn leaf disease pressure rising,High,2026-05-22T08:00:00
+A1002,Dortmund,Dry,22,8,Wheat stress from low rainfall,Medium,2026-05-22T08:00:00
+A1003,Halle-Leipzig,Rain,16,44,Vegetable fungal pressure elevated,High,2026-05-22T08:00:00
+A1004,Munich South,Storms,24,52,Grape mildew alert,High,2026-05-22T08:00:00
+A1005,Stuttgart,Sunny,23,11,Fruit pest window expected,Medium,2026-05-22T08:00:00
+A1006,Potsdam,Showers,19,36,Potato blight conditions,High,2026-05-22T08:00:00
+A1007,Frankfurt-Erfurt,Cloudy,17,19,Wheat disease watch,Medium,2026-05-22T08:00:00
+A1008,Kiel,Dry,21,7,Corn emergence stress watch,Low,2026-05-22T08:00:00
