@@ -1007,24 +1007,161 @@ function renderCustomer360Page(rows) {
 }
 
 function renderMarketMapPage(rows) {
-  const weather = scoped("weather", rows);
+  const territories = marketTerritoryRows(rows);
+  const highRisk = territories.filter((item) => item.risk === "High").length;
+  const weatherRows = scoped("weather_alerts", rows)
+    .sort((a, b) => ({ High: 0, Medium: 1, Low: 2 }[a.risk_level] ?? 3) - ({ High: 0, Medium: 1, Low: 2 }[b.risk_level] ?? 3));
   return `
     <div class="page-head">
-      <div><h2>Market Map</h2><p>Territory view of weather pressure, account risk, and near-term commercial actions.</p></div>
+      <div><h2>Market Map</h2><p>Germany territory view with customer location, weather pressure, account risk, and near-term commercial actions.</p></div>
       <button class="btn" data-action="export">Export map data</button>
     </div>
-    <div class="map-layout">
-      <div class="market-map">
-        ${weather.map((item, index) => {
-          const account = byId(item.account_id);
-          const left = 12 + (index * 17) % 76;
-          const top = 18 + (index * 23) % 58;
-          return `<button class="map-pin ${severityClass(item.signal_strength)}" style="left:${left}%;top:${top}%;" data-account="${item.account_id}" title="${account.customer}">${account.territory}</button>`;
-        }).join("")}
-      </div>
-      <div class="right-rail">${miniWeather(rows)}${miniAlerts(rows)}</div>
+    <div class="map-kpi-row">
+      <div><span>Territories</span><strong>${territories.length}</strong></div>
+      <div><span>High weather risk</span><strong>${highRisk}</strong></div>
+      <div><span>Sales in scope</span><strong>${formatMoney(territories.reduce((sum, item) => sum + item.sales, 0))}</strong></div>
+      <div><span>Avg. attainment</span><strong>${pct(avg(territories.map((item) => item.attainment)))}</strong></div>
+    </div>
+    <div class="market-map-layout">
+      <section class="market-map-card">
+        <div class="map-toolbar">
+          <div><strong>Germany field view</strong><span>Pin size = sales value, color = current risk</span></div>
+          <div class="map-legend">
+            <span><i class="risk-dot bad"></i>High</span>
+            <span><i class="risk-dot warn"></i>Medium</span>
+            <span><i class="risk-dot good"></i>Low</span>
+          </div>
+        </div>
+        <div class="germany-map" aria-label="Mock Germany territory map">
+          <div class="map-region north">North</div>
+          <div class="map-region west">West</div>
+          <div class="map-region east">East</div>
+          <div class="map-region central">Central</div>
+          <div class="map-region south">South</div>
+          ${territories.map((item) => mapAccountPin(item)).join("")}
+        </div>
+      </section>
+      <aside class="map-side-panel">
+        <div class="mini-panel">
+          <div class="panel-title-row"><h3>Weather pressure</h3><span>${weatherRows.filter((item) => item.risk_level === "High").length} high</span></div>
+          <div class="market-alert-list">
+            ${weatherRows.slice(0, 5).map((item) => {
+              const account = byId(item.account_id);
+              return `
+                <button class="market-alert-item clickable" data-account="${item.account_id}">
+                  <span class="health-badge ${severityClass(item.risk_level)}">${item.risk_level}</span>
+                  <div>
+                    <strong>${account.customer}</strong>
+                    <small>${item.territory} · ${item.crop}</small>
+                    <p>${item.weather_event}</p>
+                  </div>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </div>
+        <div class="mini-panel">
+          <h3>Map actions</h3>
+          <div class="map-action-list">
+            ${territories.slice(0, 5).map((item) => `
+              <button class="map-action-item clickable" data-account="${item.account.account_id}">
+                <strong>${item.account.territory}</strong>
+                <span>${item.nextAction}</span>
+                <small>${item.account.customer}</small>
+              </button>
+            `).join("")}
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div class="territory-grid">
+      ${territories.map((item) => territoryCard(item)).join("")}
     </div>
   `;
+}
+
+function marketTerritoryRows(rows) {
+  const scopedWeather = scoped("weather", rows);
+  const scopedWeatherAlerts = scoped("weather_alerts", rows);
+  const scopedHealth = scoped("account_health", rows);
+  const scopedActions = scoped("next_best_actions", rows);
+  const items = Array.from(accountIdsInScope(rows)).map((id) => {
+    const account = byId(id);
+    const accountRows = rows.filter((row) => row.account_id === id);
+    const sales = accountRows.reduce((sum, row) => sum + row.sales_actual, 0);
+    const target = accountRows.reduce((sum, row) => sum + row.sales_target, 0);
+    const gp = accountRows.reduce((sum, row) => sum + row.gross_profit, 0);
+    const weather = scopedWeather.find((item) => item.account_id === id);
+    const weatherAlert = scopedWeatherAlerts.find((item) => item.account_id === id);
+    const health = scopedHealth.find((item) => item.account_id === id);
+    const nba = scopedActions.find((item) => item.account_id === id);
+    const risk = weatherAlert?.risk_level || weather?.signal_strength || health?.priority || "Low";
+    return {
+      account,
+      sales,
+      target,
+      gp,
+      attainment: target ? sales / target : 0,
+      margin: sales ? gp / sales : 0,
+      weather,
+      weatherAlert,
+      health,
+      risk,
+      nextAction: nba?.next_best_action || weatherAlert?.recommended_action || health?.next_best_action || "Monitor account"
+    };
+  }).filter((item) => item.account);
+  const maxSales = Math.max(...items.map((item) => item.sales), 1);
+  return items.map((item) => ({
+    ...item,
+    size: 34 + Math.round((item.sales / maxSales) * 30)
+  })).sort((a, b) => {
+    const riskOrder = { High: 0, Critical: 0, Medium: 1, Watch: 1, Low: 2 };
+    return (riskOrder[a.risk] ?? 3) - (riskOrder[b.risk] ?? 3) || b.sales - a.sales;
+  });
+}
+
+function mapAccountPin(item) {
+  const position = projectGermanyPoint(item.account.lat, item.account.lon);
+  return `
+    <button class="map-account-pin clickable ${severityClass(item.risk)}" style="left:${position.x}%;top:${position.y}%;width:${item.size}px;height:${item.size}px;" data-account="${item.account.account_id}" title="${item.account.customer}">
+      <span>${item.account.territory.split(/[ -]/).map((word) => word[0]).join("").slice(0, 3)}</span>
+      <strong>${formatMoney(item.sales)}</strong>
+    </button>
+  `;
+}
+
+function projectGermanyPoint(lat, lon) {
+  const minLat = 47.2;
+  const maxLat = 55.1;
+  const minLon = 5.7;
+  const maxLon = 15.2;
+  return {
+    x: 16 + ((lon - minLon) / (maxLon - minLon)) * 68,
+    y: 9 + (1 - ((lat - minLat) / (maxLat - minLat))) * 80
+  };
+}
+
+function territoryCard(item) {
+  return `
+    <button class="territory-card clickable" data-account="${item.account.account_id}">
+      <div class="territory-card-head">
+        <div><strong>${item.account.territory}</strong><span>${item.account.customer}</span></div>
+        <span class="health-badge ${severityClass(item.risk)}">${item.risk}</span>
+      </div>
+      <div class="territory-metrics">
+        <div><span>Sales</span><strong>${formatMoney(item.sales)}</strong></div>
+        <div><span>Plan</span><strong>${pct(item.attainment)}</strong></div>
+        <div><span>GP margin</span><strong>${pct(item.margin)}</strong></div>
+      </div>
+      <p>${item.weatherAlert?.weather_event || item.weather?.risk_signal || "No weather pressure"}</p>
+      <em>${item.nextAction}</em>
+    </button>
+  `;
+}
+
+function avg(values) {
+  const usable = values.filter((value) => Number.isFinite(value));
+  return usable.length ? usable.reduce((sum, value) => sum + value, 0) / usable.length : 0;
 }
 
 function renderDataInputPage(rows) {

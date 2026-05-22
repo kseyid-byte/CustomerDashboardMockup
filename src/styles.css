@@ -55,7 +55,7 @@ button {
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .app-header h1 {
@@ -873,8 +873,7 @@ button {
 .calendar-event:hover,
 .pending-item:hover,
 .customer-card:hover,
-.talking-points button:hover,
-.map-pin:hover {
+.talking-points button:hover {
   border-color: #9db8ef;
   box-shadow: 0 10px 24px rgba(39, 102, 216, 0.12);
 }
@@ -1282,62 +1281,358 @@ button {
   font-size: 13px;
 }
 
-.map-layout,
 .data-input-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
   gap: 14px;
 }
 
-.market-map {
-  position: relative;
-  min-height: 560px;
+.map-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.map-kpi-row div {
+  min-height: 66px;
+  border: 1px solid #e1e8f2;
+  border-radius: 7px;
+  background: #fff;
+  padding: 11px 12px;
+}
+
+.map-kpi-row span,
+.map-kpi-row strong {
+  display: block;
+}
+
+.map-kpi-row span {
+  color: #6b778c;
+  font-size: 11px;
+}
+
+.map-kpi-row strong {
+  margin-top: 6px;
+  color: #143b89;
+  font-size: 19px;
+}
+
+.market-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.market-map-card {
   border: 1px solid #e1e8f2;
   border-radius: 7px;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
-    radial-gradient(circle at 22% 28%, #dfeafa 0 10%, transparent 11%),
-    radial-gradient(circle at 63% 42%, #d7e7d9 0 12%, transparent 13%),
-    radial-gradient(circle at 48% 72%, #f5e8cb 0 10%, transparent 11%),
-    #f7f9fc;
+  background: #fff;
 }
 
-.market-map::before {
+.map-toolbar {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e1e8f2;
+  background: #f7faff;
+}
+
+.map-toolbar strong,
+.map-toolbar span {
+  display: block;
+}
+
+.map-toolbar strong {
+  color: #244b8d;
+}
+
+.map-toolbar span {
+  color: #6b778c;
+  font-size: 12px;
+}
+
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #536174;
+}
+
+.risk-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.risk-dot.good { background: var(--green); }
+.risk-dot.warn { background: var(--orange); }
+.risk-dot.bad { background: var(--red); }
+
+.germany-map {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.88), rgba(255,255,255,.66)),
+    linear-gradient(0deg, transparent 0 49%, rgba(166, 180, 203, .16) 50%, transparent 51%),
+    linear-gradient(90deg, transparent 0 49%, rgba(166, 180, 203, .16) 50%, transparent 51%),
+    #eef4fb;
+  background-size: auto, 100% 82px, 82px 100%, auto;
+}
+
+.germany-map::before {
   content: "";
   position: absolute;
-  inset: 38px 70px;
-  border: 2px solid #cfd8e3;
-  border-radius: 48% 42% 50% 38%;
-  transform: rotate(-12deg);
+  inset: 34px 150px 42px 150px;
+  border: 2px solid #b9c8d9;
+  border-radius: 47% 39% 51% 35% / 22% 30% 41% 52%;
+  transform: rotate(-8deg);
+  background:
+    linear-gradient(160deg, rgba(204, 222, 245, .55), rgba(235, 242, 234, .75)),
+    #f8fbff;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 18px 40px rgba(29, 44, 66, .08);
 }
 
-.map-pin {
+.germany-map::after {
+  content: "";
   position: absolute;
-  transform: translate(-50%, -50%);
-  min-width: 84px;
-  min-height: 30px;
-  border: 1px solid #cfd8e3;
-  border-radius: 999px;
-  background: #fff;
-  color: #244b8d;
+  left: 50%;
+  top: 48px;
+  width: 2px;
+  height: 518px;
+  background: linear-gradient(#cbd8e8, transparent);
+  opacity: .55;
+  transform: rotate(-8deg);
+}
+
+.map-region {
+  position: absolute;
+  z-index: 1;
+  color: rgba(36, 75, 141, .38);
   font-size: 12px;
-  box-shadow: 0 8px 18px rgba(29, 44, 66, 0.12);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
-.map-pin.bad {
-  border-color: #f0aaa5;
-  color: #b23535;
+.map-region.north { left: 47%; top: 11%; }
+.map-region.west { left: 35%; top: 39%; }
+.map-region.east { right: 31%; top: 36%; }
+.map-region.central { left: 45%; top: 53%; }
+.map-region.south { left: 46%; bottom: 13%; }
+
+.map-account-pin {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(29, 44, 66, .22);
 }
 
-.map-pin.warn {
-  border-color: #f0c778;
-  color: #9a6200;
+.map-account-pin.good { background: #16814d; }
+.map-account-pin.warn { background: #b36b00; }
+.map-account-pin.bad { background: #c43f38; }
+
+.map-account-pin span {
+  font-size: 10px;
+  font-weight: 800;
 }
 
-.map-pin.good {
-  border-color: #8ccaa9;
-  color: #137146;
+.map-account-pin strong {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  transform: translateX(-50%);
+  min-width: 72px;
+  border: 1px solid #d6e2f3;
+  border-radius: 5px;
+  background: #fff;
+  color: #143b89;
+  padding: 4px 6px;
+  font-size: 10px;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(29, 44, 66, .14);
+}
+
+.map-account-pin:hover {
+  z-index: 5;
+}
+
+.map-account-pin:hover strong {
+  display: block;
+}
+
+.map-side-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.market-alert-list,
+.map-action-list {
+  display: grid;
+  gap: 8px;
+}
+
+.market-alert-item,
+.map-action-item,
+.territory-card {
+  width: 100%;
+  border: 1px solid #e1e8f2;
+  border-radius: 7px;
+  background: #fff;
+  color: inherit;
+  text-align: left;
+}
+
+.market-alert-item {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 9px;
+  padding: 9px;
+}
+
+.market-alert-item > .health-badge {
+  width: 56px;
+  height: 24px;
+  padding: 0;
+}
+
+.market-alert-item strong,
+.market-alert-item small,
+.market-alert-item p,
+.map-action-item strong,
+.map-action-item span,
+.map-action-item small {
+  display: block;
+}
+
+.market-alert-item strong,
+.map-action-item strong {
+  color: #143b89;
+  font-size: 12px;
+}
+
+.market-alert-item small,
+.map-action-item small {
+  color: #6b778c;
+  font-size: 10px;
+}
+
+.market-alert-item p {
+  margin: 4px 0 0;
+  color: #344054;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.map-action-item {
+  padding: 10px;
+}
+
+.map-action-item span {
+  margin: 5px 0;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.territory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.territory-card {
+  min-height: 214px;
+  padding: 12px;
+}
+
+.territory-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.territory-card-head strong,
+.territory-card-head span,
+.territory-card p,
+.territory-card em {
+  display: block;
+}
+
+.territory-card-head strong {
+  color: #143b89;
+  font-size: 13px;
+}
+
+.territory-card-head span {
+  margin-top: 3px;
+  color: #6b778c;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.territory-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.territory-metrics div {
+  border: 1px solid #e1e8f2;
+  border-radius: 6px;
+  background: #f8fbff;
+  padding: 7px;
+}
+
+.territory-metrics span,
+.territory-metrics strong {
+  display: block;
+}
+
+.territory-metrics span {
+  color: #6b778c;
+  font-size: 10px;
+}
+
+.territory-metrics strong {
+  margin-top: 4px;
+  color: #111;
+  font-size: 12px;
+}
+
+.territory-card p {
+  margin: 0 0 8px;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.territory-card em {
+  color: #536174;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.3;
 }
 
 .data-input-grid {
@@ -1394,7 +1689,7 @@ button {
   color: #0766b1;
   font-weight: 800;
   font-size: 30px;
-  letter-spacing: -1px;
+  letter-spacing: 0;
 }
 
 .brand-lockup span {
