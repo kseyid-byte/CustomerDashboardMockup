@@ -317,11 +317,9 @@ function renderOverviewPage(rows, metrics) {
         ${miniAlerts(rows)}
       </div>
     </div>
-    <div class="mini-chart-row">
+    <div class="overview-card-grid">
       ${miniWaterfall(rows)}
       ${miniOpportunity(rows)}
-    </div>
-    <div class="mini-bottom-row">
       ${miniAccountHealth(rows)}
       ${miniOrders(rows)}
     </div>
