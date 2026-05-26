@@ -1079,21 +1079,6 @@ function renderChangelogPage() {
     <div class="page-head">
       <div><h2>Changes</h2><p>Version 1 — Made available by Kerem</p></div>
     </div>
-    <div class="mini-panel" style="max-width:720px;margin:14px auto 0">
-        <table class="mini-table micro">
-          <thead><tr><th>Version</th><th>Change</th></tr></thead>
-          <tbody>
-            <tr><td>1.001</td><td>Changed color scheme</td></tr>
-            <tr><td>1.000</td><td>Removed Category (channel) filter from filter bar</td></tr>
-            <tr><td>1.000</td><td>Improved market map visualization</td></tr>
-            <tr><td>1.000</td><td>Standardized alert priority badges</td></tr>
-            <tr><td>1.000</td><td>Added customer prep data intelligence panels</td></tr>
-            <tr><td>1.000</td><td>Aligned overview dashboard cards</td></tr>
-            <tr><td>1.000</td><td>Made weekly planner a time-grid calendar</td></tr>
-            <tr><td>1.000</td><td>Moved dashboard app to repository root</td></tr>
-          </tbody>
-        </table>
-      </div>
   `;
 }
 
