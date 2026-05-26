@@ -273,8 +273,7 @@ function sidebarPages() {
     { id: "overview", label: "Account overview", icon: "◎" },
     { id: "planner", label: "Weekly planner", icon: "▦" },
     { id: "prep", label: "Pre-meeting prep", icon: "◫" },
-    { id: "customer360", label: "MCD Customer view", icon: "◉" },
-    { id: "market-map", label: "Market Map", icon: "⌖" }
+    { id: "changelog", label: "Changes", icon: "⚙" }
   ];
 }
 
@@ -289,8 +288,7 @@ function renderPageContent(rows, metrics) {
     overview: () => renderOverviewPage(rows, metrics),
     planner: () => renderPlannerPage(rows),
     prep: () => renderPrepPage(rows),
-    customer360: () => renderCustomer360Page(rows),
-    "market-map": () => renderMarketMapPage(rows),
+    changelog: () => renderChangelogPage(rows),
     "data-input": () => renderDataInputPage(rows)
   };
   return (pageMap[state.activePage] || pageMap.overview)();
@@ -1072,6 +1070,28 @@ function renderMarketMapPage(rows) {
     </div>
     <div class="territory-grid">
       ${territories.map((item) => territoryCard(item)).join("")}
+    </div>
+  `;
+}
+
+function renderChangelogPage() {
+  return `
+    <div class="page-head">
+      <div><h2>Changes</h2><p>Version 1 — Made available by Kerem</p></div>
+    </div>
+    <div class="changelog-list">
+      <div class="changelog-version">
+        <h3>Version 1</h3>
+        <ul>
+          <li>Removed Category (channel) filter from filter bar</li>
+          <li>Improved market map visualization</li>
+          <li>Standardized alert priority badges</li>
+          <li>Added customer prep data intelligence panels</li>
+          <li>Aligned overview dashboard cards</li>
+          <li>Made weekly planner a time-grid calendar</li>
+          <li>Moved dashboard app to repository root</li>
+        </ul>
+      </div>
     </div>
   `;
 }
