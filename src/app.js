@@ -29,7 +29,6 @@ const state = {
     customer: "All",
     crop: "All",
     product: "All",
-    channel: "All",
     season: "All",
     search: ""
   },
@@ -156,7 +155,6 @@ function filterRows() {
       state.filters.customer === "All" || account.customer === state.filters.customer,
       state.filters.crop === "All" || row.crop === state.filters.crop,
       state.filters.product === "All" || row.product === state.filters.product,
-      state.filters.channel === "All" || account.channel === state.filters.channel,
       !q || `${account.customer} ${account.sales_rep} ${row.product} ${row.crop}`.toLowerCase().includes(q)
     ];
     return conditions.every(Boolean);
@@ -257,8 +255,6 @@ function renderEmbeddedDashboard(rows, metrics) {
         <div class="mini-topbar">
           <strong><span class="filter-icon product-icon">▣</span>Product</strong>
           <select data-filter="product">${optionValues("product", joinedPerformance()).map((option) => `<option value="${option}" ${state.filters.product === option ? "selected" : ""}>${option}</option>`).join("")}</select>
-          <strong><span class="filter-icon category-icon">◫</span>Category</strong>
-          <select data-filter="channel">${optionValues("channel", state.data.accounts).map((option) => `<option value="${option}" ${state.filters.channel === option ? "selected" : ""}>${option}</option>`).join("")}</select>
           <strong><span class="filter-icon customer-icon">◉</span>Customer</strong>
           <select data-filter="customer">${optionValues("customer", state.data.accounts).map((option) => `<option value="${option}" ${state.filters.customer === option ? "selected" : ""}>${option}</option>`).join("")}</select>
           <strong><span class="filter-icon crop-icon">◒</span>Crop</strong>
