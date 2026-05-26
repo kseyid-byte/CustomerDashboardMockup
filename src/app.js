@@ -214,6 +214,9 @@ function render() {
 
   app.innerHTML = `
     <div class="dashboard-shell">
+      <div class="deployment-delay-banner" role="status" aria-live="polite">
+        Changes can take a few minutes to show up for people testing the dashboard.
+      </div>
       <header class="app-header">
         <div>
           <p>Wholesale customer cockpit</p>

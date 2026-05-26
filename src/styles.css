@@ -41,6 +41,18 @@ button {
   margin: 16px auto;
 }
 
+.deployment-delay-banner {
+  margin: 0 0 12px;
+  padding: 12px 16px;
+  border: 1px solid #f0c36d;
+  border-radius: 8px;
+  background: #fff7df;
+  color: #775100;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(119, 81, 0, 0.08);
+}
+
 .app-header {
   height: 76px;
   display: flex;
