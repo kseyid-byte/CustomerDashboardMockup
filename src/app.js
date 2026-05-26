@@ -1080,7 +1080,14 @@ function renderMarketMapPage(rows) {
 function renderChangelogPage() {
   return `
     <div class="page-head">
-      <div><h2>Changes</h2><p>Version 1 — Made available by Kerem</p></div>
+      <div><h2>Changes</h2><p>Simple changelog of dashboard updates.</p></div>
+    </div>
+    <div class="mini-panel">
+      <ul class="change-log-list">
+        <li><strong>2026‑05‑26</strong> — Added deployment delay banner at top of dashboard. Requested by Kerem S.</li>
+        <li><strong>2026‑05‑26</strong> — Updated gross‑to‑net waterfall colors (gross: yellow, deductions/net: black). Requested by Kerem S.</li>
+        <li><strong>2026‑05‑26</strong> — Policy: minimal messages and always include dashboard link in responses. Requested by Kerem S.</li>
+      </ul>
     </div>
   `;
 }
