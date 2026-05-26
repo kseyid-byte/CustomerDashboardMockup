@@ -1675,11 +1675,11 @@ button {
 }
 
 .wf-rect.total {
-  fill: #2766d8;
+  fill: #ffd600; /* yellow */
 }
 
 .wf-rect.deduction {
-  fill: #ef6b63;
+  fill: #202124; /* black */
 }
 
 .wf-amount {
