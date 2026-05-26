@@ -1868,27 +1868,3 @@ button {
 }
 
 /* ── Changelog page ────────────────────────────── */
-.changelog-list {
-  max-width: 720px;
-  margin: 24px auto;
-}
-.changelog-version {
-  background: #1e1e24;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 20px 28px;
-}
-.changelog-version h3 {
-  margin: 0 0 12px;
-  font-size: 18px;
-  color: #eaeaea;
-}
-.changelog-version ul {
-  margin: 0;
-  padding: 0 0 0 20px;
-}
-.changelog-version li {
-  margin-bottom: 8px;
-  line-height: 1.5;
-  color: #ccc;
-}
