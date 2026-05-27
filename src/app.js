@@ -1084,7 +1084,7 @@ function renderChangelogPage() {
     </div>
     <div class="mini-panel">
       <ul class="change-log-list">
-        <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Gizem S</em></li>
+        <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
         <li><strong>2026‑05‑26</strong> — Added deployment delay banner at top of dashboard. <em>Requested by: Kerem S</em></li>
         <li><strong>2026‑05‑26</strong> — Updated gross‑to‑net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>
         <li><strong>2026‑05‑26</strong> — Policy introduced: every change entry must include who requested it. <em>Requested by: Kerem S</em></li>
