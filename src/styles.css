@@ -23,7 +23,7 @@
 
 body {
   margin: 0;
-  min-width: 0;
+  min-width: 1180px;
   background: #eef2f6;
   color: var(--ink);
 }
@@ -39,20 +39,6 @@ button {
 .dashboard-shell {
   width: min(1440px, calc(100vw - 32px));
   margin: 16px auto;
-}
-
-@media (max-width: 900px) {
-  .dashboard-shell { width: calc(100vw - 16px); margin: 8px auto; }
-  .app-header { height: auto; flex-direction: column; align-items: flex-start; gap: 6px; }
-  .app-header h1 { font-size: 24px; }
-  .dashboard-frame { grid-template-columns: 1fr; }
-  .mini-sidebar { display:flex; overflow-x:auto; gap:8px; border-right:none; border-bottom:1px solid var(--soft-line); padding:10px; }
-  .mini-sidebar button { min-width:120px; margin-bottom:0; white-space:nowrap; }
-  .mini-topbar { grid-template-columns:1fr; gap:6px; }
-  .mini-kpis { grid-template-columns:repeat(2,1fr); }
-  .mini-content { grid-template-columns:1fr; }
-  .right-rail { order:-1; }
-  .account-overview-table { min-width:900px; }
 }
 
 .deployment-delay-banner {
