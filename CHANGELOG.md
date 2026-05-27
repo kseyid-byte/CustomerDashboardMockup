@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-05-27
+- Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. Requested by Gizem S.
+
 ## 2026-05-26
 - Added top deployment delay banner to inform users that changes may take a few minutes to show up.
 - Minimal user messaging policy and always share the dashboard link in the output.

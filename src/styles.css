@@ -1879,4 +1879,191 @@ button {
   opacity: 1;
 }
 
-/* ── Changelog page ────────────────────────────── */
+@media (max-width: 760px) {
+  body {
+    min-width: 0;
+  }
+
+  .dashboard-shell {
+    width: 100%;
+    margin: 0;
+  }
+
+  .deployment-delay-banner {
+    margin: 0;
+    border-radius: 0;
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .app-header {
+    height: auto;
+    min-height: 72px;
+    padding: 14px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 26px;
+  }
+
+  .app-header p {
+    font-size: 11px;
+  }
+
+  .brand-lockup {
+    font-size: 22px;
+  }
+
+  .brand-lockup span {
+    right: 29px;
+    top: -8px;
+    width: 12px;
+    height: 8px;
+  }
+
+  .dashboard-frame,
+  .dashboard-frame.sidebar-collapsed {
+    display: block;
+    min-height: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  .mini-sidebar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding: 10px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--soft-line);
+  }
+
+  .mini-brand {
+    flex: 0 0 auto;
+    margin: 0;
+    min-width: 112px;
+  }
+
+  .mini-brand .collapse-button,
+  .upload-label {
+    display: none;
+  }
+
+  .mini-sidebar button,
+  .dashboard-frame.sidebar-collapsed .mini-sidebar button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 34px;
+    margin: 0;
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+
+  .dashboard-frame.sidebar-collapsed .mini-brand span,
+  .dashboard-frame.sidebar-collapsed .nav-label {
+    display: inline;
+  }
+
+  .dashboard-frame.sidebar-collapsed .nav-icon {
+    width: 18px;
+    margin-right: 7px;
+  }
+
+  .mini-main {
+    padding: 12px;
+  }
+
+  .page-head {
+    display: block;
+  }
+
+  .page-head .btn {
+    margin-top: 10px;
+  }
+
+  .mini-topbar {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .mini-topbar strong {
+    margin-top: 4px;
+  }
+
+  .mini-topbar select {
+    height: 34px;
+  }
+
+  .mini-kpis,
+  .overview-card-grid,
+  .prep-signal-grid,
+  .prep-two-one-grid,
+  .prep-grid,
+  .data-input-grid,
+  .customer-grid,
+  .territory-grid,
+  .map-kpi-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-content,
+  .calendar-layout,
+  .market-map-layout,
+  .map-layout {
+    display: block;
+  }
+
+  .right-rail,
+  .planner-actions,
+  .map-side-panel {
+    margin-top: 12px;
+  }
+
+  .mini-tabs {
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .mini-tabs button {
+    flex: 0 0 auto;
+  }
+
+  .mini-table-wrap,
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .account-overview-wrap {
+    max-height: 360px;
+  }
+
+  .calendar-board {
+    overflow-x: auto;
+  }
+
+  .calendar-grid {
+    min-width: 760px;
+  }
+
+  .planner-actions .mini-panel {
+    min-height: 0;
+  }
+
+  .germany-map {
+    min-height: 520px;
+  }
+
+  .germany-map::before {
+    inset: 34px 46px 42px;
+  }
+
+  .drawer-panel {
+    width: min(100vw, 420px);
+  }
+
+  .modal {
+    width: calc(100vw - 24px);
+  }
+}
