@@ -708,11 +708,11 @@ function productSignalPanel(title, products, mode) {
         <tbody>
           ${products.slice(0, 5).map((item) => `
             <tr>
-              <td><strong>${item.product}</strong><small>${item.crop} · ${item.accountCount} accounts</small></td>
-              <td>${formatMoney(item.actual)}</td>
-              <td class="${item.vsPlan >= 1 ? "pos" : "neg"}">${pct(item.vsPlan)}</td>
-              <td class="${item.vsLy >= 1 ? "pos" : "neg"}">${pct(item.vsLy)}</td>
-              <td>${mode === "decline" ? "Prepare recovery ask and stock check" : "Protect margin and secure upside"}</td>
+              <td data-label="Product"><strong>${item.product}</strong><small>${item.crop} · ${item.accountCount} accounts</small></td>
+              <td data-label="Sales">${formatMoney(item.actual)}</td>
+              <td data-label="% Plan" class="${item.vsPlan >= 1 ? "pos" : "neg"}">${pct(item.vsPlan)}</td>
+              <td data-label="% LY" class="${item.vsLy >= 1 ? "pos" : "neg"}">${pct(item.vsLy)}</td>
+              <td data-label="Action">${mode === "decline" ? "Prepare recovery ask and stock check" : "Protect margin and secure upside"}</td>
             </tr>
           `).join("") || `<tr><td colspan="5">${fallback}</td></tr>`}
         </tbody>
@@ -730,11 +730,11 @@ function countryBenchmarkPanel(products) {
         <tbody>
           ${products.sort((a, b) => a.marketGap - b.marketGap).map((item) => `
             <tr>
-              <td><strong>${item.product}</strong><small>${item.crop}</small></td>
-              <td class="${item.vsLy >= 1 ? "pos" : "neg"}">${pct(item.vsLy)}</td>
-              <td class="${item.countryTrend >= 1 ? "pos" : "neg"}">${pct(item.countryTrend)}</td>
-              <td class="${item.marketGap >= 0 ? "pos" : "neg"}">${item.marketGap >= 0 ? "+" : ""}${pct(item.marketGap)}</td>
-              <td>${item.marketGap < -0.05 ? "Underperforming country trend; ask why in meeting" : "Trend in line or ahead; defend position"}</td>
+              <td data-label="Product"><strong>${item.product}</strong><small>${item.crop}</small></td>
+              <td data-label="Account trend" class="${item.vsLy >= 1 ? "pos" : "neg"}">${pct(item.vsLy)}</td>
+              <td data-label="Germany trend" class="${item.countryTrend >= 1 ? "pos" : "neg"}">${pct(item.countryTrend)}</td>
+              <td data-label="Gap" class="${item.marketGap >= 0 ? "pos" : "neg"}">${item.marketGap >= 0 ? "+" : ""}${pct(item.marketGap)}</td>
+              <td data-label="Prep note">${item.marketGap < -0.05 ? "Underperforming country trend; ask why in meeting" : "Trend in line or ahead; defend position"}</td>
             </tr>
           `).join("")}
         </tbody>
@@ -1084,6 +1084,7 @@ function renderChangelogPage() {
     </div>
     <div class="mini-panel">
       <ul class="change-log-list">
+        <li><strong>2026-05-27</strong> - Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. <em>Requested by: Kerem Seyid</em></li>
         <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
         <li><strong>2026‑05‑26</strong> — Added deployment delay banner at top of dashboard. <em>Requested by: Kerem S</em></li>
         <li><strong>2026‑05‑26</strong> — Updated gross‑to‑net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>

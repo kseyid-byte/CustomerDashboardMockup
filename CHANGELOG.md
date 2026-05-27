@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-05-27
+- Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. Requested by Kerem Seyid.
 - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. Requested by Kerem Seyid.
 
 ## 2026-05-26

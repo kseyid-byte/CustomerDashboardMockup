@@ -2039,6 +2039,59 @@ button {
     max-height: 360px;
   }
 
+  .product-signal-panel {
+    min-height: 0;
+  }
+
+  .product-signal-panel .mini-table,
+  .product-signal-panel .mini-table thead,
+  .product-signal-panel .mini-table tbody,
+  .product-signal-panel .mini-table tr,
+  .product-signal-panel .mini-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .product-signal-panel .mini-table thead {
+    display: none;
+  }
+
+  .product-signal-panel .mini-table tr {
+    border: 1px solid #e1e8f2;
+    border-radius: 7px;
+    background: #fff;
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .product-signal-panel .mini-table td {
+    display: grid;
+    grid-template-columns: minmax(86px, 36%) minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    border-bottom: 0;
+    padding: 4px 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .product-signal-panel .mini-table td::before {
+    content: attr(data-label);
+    color: #6b778c;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .product-signal-panel .mini-table td:first-child {
+    grid-template-columns: 1fr;
+    padding-bottom: 7px;
+  }
+
+  .product-signal-panel .mini-table td:first-child::before {
+    display: none;
+  }
+
   .calendar-board {
     overflow-x: auto;
   }
