@@ -3,6 +3,7 @@
 ## 2026-05-28
 - Added hover overlay expansion for the scenario table in the pre-meeting prep account overview matrix so large tables can be viewed without resizing the layout. Requested by Shantanu.
 - Added hover expansion behavior and horizontal scroll hint for all scrollable tables (`table-wrap`, `mini-table-wrap`) to improve readability of wide matrices. Requested by Shantanu.
+- Added Shantanu's May 28 changes to the dashboard's Changes page, and made it auto-fetch future entries from CHANGELOG.md.
 
 ## 2026-05-27
 - Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. Requested by Kerem Seyid.
