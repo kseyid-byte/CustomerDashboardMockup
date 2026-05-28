@@ -1078,20 +1078,40 @@ function renderMarketMapPage(rows) {
 }
 
 function renderChangelogPage() {
+  const changelogUrl = "https://raw.githubusercontent.com/kseyid-byte/CustomerDashboardMockup/main/CHANGELOG.md";
   return `
     <div class="page-head">
       <div><h2>Changes</h2><p>Simple changelog of dashboard updates.</p></div>
     </div>
-    <div class="mini-panel">
+    <div class="mini-panel" id="changelog-container">
       <ul class="change-log-list">
+        <li><strong>2026-05-28</strong> - Added hover overlay expansion for the scenario table in the pre-meeting prep account overview matrix so large tables can be viewed without resizing the layout. <em>Requested by: Shantanu</em></li>
+        <li><strong>2026-05-28</strong> - Added hover expansion behavior and horizontal scroll hint for all scrollable tables to improve readability of wide matrices. <em>Requested by: Shantanu</em></li>
         <li><strong>2026-05-27</strong> - Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. <em>Requested by: Kerem Seyid</em></li>
         <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
-        <li><strong>2026‑05‑26</strong> — Added deployment delay banner at top of dashboard. <em>Requested by: Kerem S</em></li>
-        <li><strong>2026‑05‑26</strong> — Updated gross‑to‑net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>
-        <li><strong>2026‑05‑26</strong> — Policy introduced: every change entry must include who requested it. <em>Requested by: Kerem S</em></li>
+        <li><strong>2026-05-26</strong> — Added deployment delay banner at top of dashboard. <em>Requested by: Kerem S</em></li>
+        <li><strong>2026-05-26</strong> — Updated gross-to-net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>
+        <li><strong>2026-05-26</strong> — Policy introduced: every change entry must include who requested it. <em>Requested by: Kerem S</em></li>
       </ul>
       <p class="changelog-rule"><strong>Rule:</strong> Every change logged must include the person who requested it.</p>
     </div>
+    <script>
+      (async function() {
+        try {
+          const res = await fetch("${changelogUrl}");
+          if (!res.ok) return;
+          const md = await res.text();
+          const container = document.getElementById("changelog-container");
+          if (!container) return;
+          container.innerHTML = '<div class="change-log-md">' + md.split("\\n").filter(l => l.trim()).map(l => {
+            if (l.startsWith("# ")) return '<h2>' + l.slice(2) + '</h2>';
+            if (l.startsWith("## ")) return '<h3>' + l.slice(3) + '</h3>';
+            if (l.startsWith("- ")) return '<p class="change-entry">' + l.slice(2) + '</p>';
+            return '<p>' + l + '</p>';
+          }).join("") + '</div>';
+        } catch(e) {}
+      })();
+    </script>
   `;
 }
 
