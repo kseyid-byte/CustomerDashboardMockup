@@ -627,7 +627,7 @@ function renderPrepPage(rows) {
       <button class="btn primary" data-action="new-opportunity">Create opportunity</button>
     </div>
     <div class="prep-overview-table">
-      <div class="mini-table-wrap account-overview-wrap" tabindex="0">${accountOverviewMonthlyTable(rows)}</div>
+      <div class="mini-table-wrap account-overview-wrap scenario-expand" tabindex="0">${accountOverviewMonthlyTable(rows)}</div>
     </div>
     <div class="prep-signal-grid">
       ${productSignalPanel("Products going down", declining, "decline")}
