@@ -341,32 +341,6 @@ button {
   max-height: 408px;
 }
 
-/* Scenario table overlay expand */
-.scenario-expand {
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-
-.scenario-expand:hover {
-  position: relative;
-  z-index: 50;
-  transform: scale(1.08);
-  box-shadow: 0 16px 40px rgba(20,50,120,0.25);
-}
-
-/* create visual overlay feel */
-.scenario-expand:hover::before {
-  content: "Expanded view";
-  position: absolute;
-  top: -28px;
-  left: 10px;
-  font-size: 12px;
-  background: #2f68d8;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
 .account-overview-wrap::before {
   content: "Month / Product";
   position: sticky;
