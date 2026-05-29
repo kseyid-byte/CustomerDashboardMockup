@@ -336,44 +336,6 @@ button {
   background: #fff;
 }
 
-/* Generic table containers */
-.table-wrap {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  border: 1px solid #e1e8f2;
-  background: #fff;
-  transition: box-shadow .15s ease, transform .15s ease;
-}
-
-/* Hover affordance for horizontally scrollable tables */
-.table-wrap:hover,
-.mini-table-wrap:hover {
-  box-shadow: 0 6px 18px rgba(25,60,120,0.12);
-}
-
-/* Expand table area slightly on hover for easier exploration */
-.table-wrap:hover {
-  transform: scale(1.01);
-  z-index: 5;
-}
-
-/* Show scroll hint when hovering */
-.table-wrap:hover::after,
-.mini-table-wrap:hover::after {
-  content: "Scroll →";
-  position: absolute;
-  right: 10px;
-  top: 8px;
-  font-size: 11px;
-  color: #5a6f95;
-  background: #f2f6ff;
-  border: 1px solid #d7e2f6;
-  border-radius: 10px;
-  padding: 2px 8px;
-  pointer-events: none;
-}
-
 .account-overview-wrap {
   position: relative;
   max-height: 408px;
