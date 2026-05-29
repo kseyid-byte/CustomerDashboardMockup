@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-05-29
+### Fixed
+- Reverted hover expansion and scroll hint behavior added to dashboard tables (table-wrap and mini-table-wrap).
+- Reverted scenario table hover overlay expansion on the prep page.
+
 ## 2026-05-28
 - Added hover overlay expansion for the scenario table in the pre-meeting prep account overview matrix so large tables can be viewed without resizing the layout. Requested by Shantanu.
 - Added hover expansion behavior and horizontal scroll hint for all scrollable tables (`table-wrap`, `mini-table-wrap`) to improve readability of wide matrices. Requested by Shantanu.
