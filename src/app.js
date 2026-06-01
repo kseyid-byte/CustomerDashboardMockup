@@ -258,7 +258,7 @@ function renderEmbeddedDashboard(rows, metrics) {
         <div class="mini-topbar">
           <strong><span class="filter-icon product-icon">▣</span>Product</strong>
           <select data-filter="product">${optionValues("product", joinedPerformance()).map((option) => `<option value="${option}" ${state.filters.product === option ? "selected" : ""}>${option}</option>`).join("")}</select>
-          <strong><span class="filter-icon customer-icon">◉</span>Customer</strong>
+          <strong><span class="filter-icon customer-icon">👤</span>Customer</strong>
           <select data-filter="customer">${optionValues("customer", state.data.accounts).map((option) => `<option value="${option}" ${state.filters.customer === option ? "selected" : ""}>${option}</option>`).join("")}</select>
           <strong><span class="filter-icon crop-icon">◒</span>Crop</strong>
           <select data-filter="crop">${optionValues("crop", joinedPerformance()).map((option) => `<option value="${option}" ${state.filters.crop === option ? "selected" : ""}>${option}</option>`).join("")}</select>

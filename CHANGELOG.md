@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-06-01
+
+### Changed
+- Replaced the Customer filter icon from ◉ to 👤 in the top filter bar for clearer meaning.
+
 ## 2026-05-29
 ### Fixed
 - Reverted hover expansion and scroll hint behavior added to dashboard tables (table-wrap and mini-table-wrap).
