@@ -34,9 +34,10 @@ const state = {
   },
   activeView: "Cockpit",
   activePage: "overview",
-  platformView: "dashboard",
+  platformView: "chat",
   sidebarCollapsed: false,
   platformSidebarCollapsed: false,
+  platformChatMessages: [],
   dashboardChatOpen: false,
   dashboardChatMessages: [],
   expandedMonths: ["2026-05"],
@@ -224,7 +225,9 @@ function render() {
             <p>Wholesale customer cockpit</p>
             <h1>Customer Dashboard</h1>
           </div>
-          <div class="brand-lockup">syngenta<span></span></div>
+          <div class="brand-lockup">
+            <img src="./public/assets/syngenta-logo.svg" alt="Syngenta" />
+          </div>
         </header>
         ${renderEmbeddedDashboard(rows, metrics)}
       </div>
@@ -349,6 +352,19 @@ function platformIcon(icon) {
         <path d="M7 10.5c-1.2-.2-2-.9-2-2 0-1 .8-1.8 2-2"></path>
       </svg>
     `,
+    paperclip: `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m21.4 11.6-8.5 8.5a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.1 9.1a2 2 0 1 1-2.8-2.8l8.5-8.5"></path>
+      </svg>
+    `,
+    microphone: `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"></path>
+        <path d="M19 11a7 7 0 0 1-14 0"></path>
+        <path d="M12 18v4"></path>
+        <path d="M8 22h8"></path>
+      </svg>
+    `,
     "panel-left-close": `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <rect x="3" y="4" width="18" height="16" rx="2"></rect>
@@ -430,16 +446,16 @@ function renderNewChatPage() {
     <div class="chat-landing">
       <div class="chat-center">
         <h2>Good to see you, Kerem.</h2>
-        <div class="chat-composer" role="group" aria-label="Ask anything">
-          <div class="chat-placeholder">Ask anything</div>
+        <form class="chat-composer" id="platform-chat-form" aria-label="Ask anything">
+          <textarea id="platform-chat-input" rows="2" placeholder="Ask anything"></textarea>
           <div class="chat-composer-actions">
-            <button type="button" aria-label="Attach file">⌕</button>
+            <button type="button" aria-label="Attach file">${platformIcon("paperclip")}</button>
             <div>
-              <button type="button" aria-label="Voice input">♬</button>
+              <button type="button" aria-label="Voice input">${platformIcon("microphone")}</button>
               <button class="send" type="button" aria-label="Send">↑</button>
             </div>
           </div>
-        </div>
+        </form>
         <div class="chat-suggestions">
           ${prompts.map((prompt) => `
             <button type="button">
@@ -2123,6 +2139,7 @@ function bindEvents() {
       }
       if (action === "new-platform-chat") {
         state.platformView = "chat";
+        state.platformChatMessages = [];
         state.selectedAccountId = null;
         render();
       }
@@ -2158,6 +2175,7 @@ function bindEvents() {
       sendDashboardChatMessage();
     });
   }
+
 }
 
 function sendDashboardChatMessage() {
