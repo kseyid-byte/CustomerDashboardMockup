@@ -34,7 +34,11 @@ const state = {
   },
   activeView: "Cockpit",
   activePage: "overview",
+  platformView: "dashboard",
   sidebarCollapsed: false,
+  platformSidebarCollapsed: false,
+  dashboardChatOpen: false,
+  dashboardChatMessages: [],
   expandedMonths: ["2026-05"],
   selectedAccountId: null
 };
@@ -211,27 +215,242 @@ function severityClass(value) {
 function render() {
   const rows = filterRows();
   const metrics = calcMetrics(rows);
+  const platformContent = state.platformView === "chat"
+    ? renderNewChatPage()
+    : `
+      <div class="dashboard-shell">
+        <header class="app-header">
+          <div>
+            <p>Wholesale customer cockpit</p>
+            <h1>Customer Dashboard</h1>
+          </div>
+          <div class="brand-lockup">syngenta<span></span></div>
+        </header>
+        ${renderEmbeddedDashboard(rows, metrics)}
+      </div>
+      ${renderDashboardChatWidget()}
+    `;
 
   app.innerHTML = `
-    <div class="dashboard-shell">
-      <div class="deployment-delay-banner" role="status" aria-live="polite">
-        Changes can take a few minutes to show up for people testing the dashboard.
-      </div>
-      <header class="app-header">
-        <div>
-          <p>Wholesale customer cockpit</p>
-          <h1>Customer Dashboard</h1>
-        </div>
-        <div class="brand-lockup">syngenta<span></span></div>
-      </header>
-      ${renderEmbeddedDashboard(rows, metrics)}
-    </div>
+    ${renderPlatformShell(platformContent)}
     ${renderDrawer()}
     ${renderModal()}
     <div class="toast" id="toast"></div>
   `;
 
   bindEvents();
+}
+
+function renderPlatformShell(content) {
+  return `
+    <div class="platform-shell ${state.platformSidebarCollapsed ? "platform-collapsed" : ""}">
+      <aside class="platform-sidebar" aria-label="Lynx platform navigation">
+        <div class="platform-sidebar-top">
+          <div class="platform-eye-mark"><img src="./public/assets/lynx-eye.webp" alt="" /></div>
+          <button class="platform-collapse" data-action="toggle-platform-sidebar" aria-label="${state.platformSidebarCollapsed ? "Expand" : "Collapse"} platform navigation" title="${state.platformSidebarCollapsed ? "Expand" : "Collapse"} platform navigation">
+            ${platformIcon(state.platformSidebarCollapsed ? "panel-left-open" : "panel-left-close")}
+          </button>
+        </div>
+        <nav class="platform-nav">
+          ${platformNavItem("copy-plus", "New chat", { action: "new-platform-chat", active: state.platformView === "chat", iconClass: "copy-plus-icon" })}
+          ${platformNavItem("search", "Search chats")}
+          ${platformNavItem("book-open", "Library")}
+          ${platformNavItem("⌘", "Skills")}
+          ${platformNavItem("layout-grid", "Canvas")}
+          ${platformNavItem("books", "Catalogue")}
+        </nav>
+        <section class="platform-section">
+          <button class="platform-section-title">Projects <span>⌄</span></button>
+          ${platformNavItem("folder-plus", "New Project")}
+        </section>
+        <section class="platform-section">
+          <button class="platform-section-title">Apps <span>⌄</span></button>
+          <button class="platform-app-link ${state.platformView === "dashboard" ? "active" : ""}" data-action="open-customer-dashboard" type="button">
+            <span class="platform-nav-icon">${platformIcon("head")}</span>
+            <span>Customer Dashboard</span>
+          </button>
+        </section>
+        <section class="platform-section platform-empty-section">
+          <button class="platform-section-title">Your chats <span>⌄</span></button>
+        </section>
+        <div class="platform-user">
+          <div class="platform-avatar">KS</div>
+          <div>
+            <strong>Kerem Seyid</strong>
+            <span>Kerem.Seyid@syngenta.com</span>
+          </div>
+        </div>
+      </aside>
+      <main class="platform-main">
+        <header class="platform-topbar">
+          <div class="platform-product-switcher">Lynx <span>Max</span> <small>⌄</small></div>
+          <div class="platform-logo"><img src="./public/assets/lynx-eye.webp" alt="" /> Lynx</div>
+        </header>
+        <section class="platform-app-canvas" aria-label="Customer Dashboard app">
+          ${content}
+        </section>
+      </main>
+    </div>
+  `;
+}
+
+function platformNavItem(icon, label, options = {}) {
+  const actionAttr = options.action ? ` data-action="${options.action}"` : "";
+  return `
+    <button class="platform-nav-item ${options.active ? "active" : ""}"${actionAttr} type="button">
+      <span class="platform-nav-icon ${options.iconClass || ""}">${platformIcon(icon)}</span>
+      <span>${label}</span>
+    </button>
+  `;
+}
+
+function platformIcon(icon) {
+  const icons = {
+    search: `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="6.5"></circle>
+        <path d="M15.5 15.5 21 21"></path>
+      </svg>
+    `,
+    "book-open": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 7v14"></path>
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H12V5H6.5A2.5 2.5 0 0 0 4 7.5v12Z"></path>
+        <path d="M20 19.5A2.5 2.5 0 0 0 17.5 17H12V5h5.5A2.5 2.5 0 0 1 20 7.5v12Z"></path>
+      </svg>
+    `,
+    "layout-grid": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="4" width="7" height="7" rx="1.5"></rect>
+        <rect x="13" y="4" width="7" height="7" rx="1.5"></rect>
+        <rect x="4" y="13" width="7" height="7" rx="1.5"></rect>
+        <rect x="13" y="13" width="7" height="7" rx="1.5"></rect>
+      </svg>
+    `,
+    books: `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 4h4a2 2 0 0 1 2 2v15H7a2 2 0 0 1-2-2V4Z"></path>
+        <path d="M11 6a2 2 0 0 1 2-2h4v15a2 2 0 0 1-2 2h-4V6Z"></path>
+        <path d="M8 8h1"></path>
+        <path d="M15 8h1"></path>
+      </svg>
+    `,
+    "folder-plus": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6.5h6l2 2h8v10.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6.5Z"></path>
+        <path d="M13 15h6"></path>
+        <path d="M16 12v6"></path>
+      </svg>
+    `,
+    head: `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 21v-2.4a4.6 4.6 0 0 1 4.6-4.6h.8A4.6 4.6 0 0 1 18 18.6V21"></path>
+        <path d="M8.5 8.5a4.5 4.5 0 0 1 9 0c0 2.5-2 4.5-4.5 4.5S8.5 11 8.5 8.5Z"></path>
+        <path d="M7 10.5c-1.2-.2-2-.9-2-2 0-1 .8-1.8 2-2"></path>
+      </svg>
+    `,
+    "panel-left-close": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M9 4v16"></path>
+        <path d="m15 10-3 2 3 2"></path>
+      </svg>
+    `,
+    "panel-left-open": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M9 4v16"></path>
+        <path d="m12 10 3 2-3 2"></path>
+      </svg>
+    `,
+    "message-circle": `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.8 8.8 0 0 1-3.8-.9L3 20l1.1-4.7a8.2 8.2 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.9 8.4Z"></path>
+        <path d="M8 11h8"></path>
+        <path d="M8 14h5"></path>
+      </svg>
+    `
+  };
+  return icons[icon] || icon;
+}
+
+function renderDashboardChatWidget() {
+  const messages = state.dashboardChatMessages.length
+    ? state.dashboardChatMessages
+    : [{ role: "bot", text: "Ask me anything about this dashboard." }];
+
+  return `
+    <div class="dashboard-chat-widget ${state.dashboardChatOpen ? "open" : ""}">
+      ${state.dashboardChatOpen ? `
+        <section class="dashboard-chat-panel" aria-label="Dashboard chatbot">
+          <div class="dashboard-chat-head">
+            <div>
+              <strong>Dashboard assistant</strong>
+              <span>Mock chat for sales dashboard questions</span>
+            </div>
+            <button type="button" data-action="toggle-dashboard-chat" aria-label="Close dashboard chat">×</button>
+          </div>
+          <div class="dashboard-chat-messages">
+            ${messages.map((message) => `
+              <div class="dashboard-chat-message ${message.role}">
+                <span>${escapeHtml(message.text)}</span>
+              </div>
+            `).join("")}
+          </div>
+          <form class="dashboard-chat-form" id="dashboard-chat-form">
+            <input id="dashboard-chat-input" autocomplete="off" placeholder="Ask about sales, customers, stock..." />
+            <button type="submit" aria-label="Send dashboard question">↑</button>
+          </form>
+        </section>
+      ` : `
+        <button class="dashboard-chat-launcher" type="button" data-action="toggle-dashboard-chat" aria-label="Open dashboard chat">
+          <span>${platformIcon("message-circle")}</span>
+        </button>
+      `}
+    </div>
+  `;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderNewChatPage() {
+  const prompts = [
+    "What can you do?",
+    "What fungicides does Syngenta sell ?",
+    "Tell me about Product Labels and Packaging information"
+  ];
+  return `
+    <div class="chat-landing">
+      <div class="chat-center">
+        <h2>Good to see you, Kerem.</h2>
+        <div class="chat-composer" role="group" aria-label="Ask anything">
+          <div class="chat-placeholder">Ask anything</div>
+          <div class="chat-composer-actions">
+            <button type="button" aria-label="Attach file">⌕</button>
+            <div>
+              <button type="button" aria-label="Voice input">♬</button>
+              <button class="send" type="button" aria-label="Send">↑</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-suggestions">
+          ${prompts.map((prompt) => `
+            <button type="button">
+              <span>↗</span>
+              <strong>${prompt}</strong>
+            </button>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderEmbeddedDashboard(rows, metrics) {
@@ -1898,6 +2117,23 @@ function bindEvents() {
         state.sidebarCollapsed = !state.sidebarCollapsed;
         render();
       }
+      if (action === "toggle-platform-sidebar") {
+        state.platformSidebarCollapsed = !state.platformSidebarCollapsed;
+        render();
+      }
+      if (action === "new-platform-chat") {
+        state.platformView = "chat";
+        state.selectedAccountId = null;
+        render();
+      }
+      if (action === "open-customer-dashboard") {
+        state.platformView = "dashboard";
+        render();
+      }
+      if (action === "toggle-dashboard-chat") {
+        state.dashboardChatOpen = !state.dashboardChatOpen;
+        render();
+      }
       if (action === "close-drawer") {
         state.selectedAccountId = null;
         render();
@@ -1914,6 +2150,24 @@ function bindEvents() {
     event.preventDefault();
     saveModalAction();
   });
+
+  const dashboardChatForm = document.querySelector("#dashboard-chat-form");
+  if (dashboardChatForm) {
+    dashboardChatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      sendDashboardChatMessage();
+    });
+  }
+}
+
+function sendDashboardChatMessage() {
+  const input = document.querySelector("#dashboard-chat-input");
+  const text = input?.value.trim();
+  if (!text) return;
+  state.dashboardChatMessages.push({ role: "user", text });
+  state.dashboardChatMessages.push({ role: "bot", text: "typing..." });
+  state.dashboardChatOpen = true;
+  render();
 }
 
 function openActionModal(title, kind) {
