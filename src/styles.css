@@ -47,7 +47,7 @@ button {
   height: 100vh;
   min-height: 0;
   display: grid;
-  grid-template-columns: 252px minmax(0, 1fr);
+  grid-template-columns: 202px minmax(0, 1fr);
   background: #fff;
   transition: grid-template-columns 220ms ease;
 }
@@ -153,7 +153,7 @@ button {
   background: transparent;
   color: #111;
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1;
   transition: background 160ms ease, color 160ms ease;
 }
@@ -167,7 +167,7 @@ button {
   justify-content: space-between;
   padding: 0 4px 0 2px;
   color: #6b7280;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .platform-nav-icon {
@@ -304,13 +304,13 @@ button {
 }
 
 .platform-user strong {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .platform-user span {
   margin-top: 2px;
   color: #6b7280;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .platform-main {
@@ -372,8 +372,13 @@ button {
   background: #eef2f6;
 }
 
+.platform-app-canvas.chat-canvas {
+  padding: 0;
+  background: #fff;
+}
+
 .chat-landing {
-  min-height: calc(100vh - 94px);
+  min-height: 100%;
   display: grid;
   place-items: center;
   padding: 48px 24px 96px;
