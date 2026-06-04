@@ -4,6 +4,7 @@
 
 ### Changed
 - Replaced remaining references to "dashboard" with "cockpit" across UI text, CSS classes, exports, and package metadata.
+- Forced cache-busting version bump for CSS and JS assets so browsers reload the updated Customer Cockpit UI.
 
 ### Changed
 - Renamed visible product name from "Customer Dashboard" to "Customer Cockpit" in the UI header, page title, and README.
