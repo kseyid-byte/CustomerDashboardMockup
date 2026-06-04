@@ -213,9 +213,9 @@ function render() {
   const metrics = calcMetrics(rows);
 
   app.innerHTML = `
-    <div class="dashboard-shell">
+    <div class="cockpit-shell">
       <div class="deployment-delay-banner" role="status" aria-live="polite">
-        Changes can take a few minutes to show up for people testing the dashboard.
+        Changes can take a few minutes to show up for people testing the cockpit.
       </div>
       <header class="app-header">
         <div>
@@ -236,7 +236,7 @@ function render() {
 
 function renderEmbeddedDashboard(rows, metrics) {
   return `
-    <div class="dashboard-frame ${state.sidebarCollapsed ? "sidebar-collapsed" : ""}">
+    <div class="cockpit-frame ${state.sidebarCollapsed ? "sidebar-collapsed" : ""}">
       <aside class="mini-sidebar">
         <div class="mini-brand">
           <span>KAM - Wholesaler view</span>
@@ -1997,7 +1997,7 @@ function exportFilteredCsv() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "customer-dashboard-filtered.csv";
+  link.download = "customer-cockpit-filtered.csv";
   link.click();
   URL.revokeObjectURL(url);
   showToast("Filtered CSV export prepared.");
@@ -2018,5 +2018,5 @@ loadDataProducts()
     render();
   })
   .catch((error) => {
-    app.innerHTML = `<main class="main"><h2>Unable to load dashboard</h2><p>${error.message}</p></main>`;
+    app.innerHTML = `<main class="main"><h2>Unable to load cockpit</h2><p>${error.message}</p></main>`;
   });

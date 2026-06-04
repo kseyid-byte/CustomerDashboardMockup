@@ -3,6 +3,9 @@
 ## 2026-06-04
 
 ### Changed
+- Replaced remaining references to "dashboard" with "cockpit" across UI text, CSS classes, exports, and package metadata.
+
+### Changed
 - Renamed visible product name from "Customer Dashboard" to "Customer Cockpit" in the UI header, page title, and README.
 
 ## 2026-06-01

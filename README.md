@@ -1,6 +1,6 @@
 # Customer Cockpit Mockup
 
-Operational sales dashboard mockup for sales reps, Key Account Managers, regional managers, and leadership.
+Operational sales cockpit mockup for sales reps, Key Account Managers, regional managers, and leadership.
 
 ## Run
 

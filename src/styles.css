@@ -36,7 +36,7 @@ button {
   cursor: pointer;
 }
 
-.dashboard-shell {
+.cockpit-shell {
   width: min(1440px, calc(100vw - 32px));
   margin: 16px auto;
 }
@@ -76,7 +76,7 @@ button {
   line-height: 1;
 }
 
-.dashboard-frame {
+.cockpit-frame {
   display: grid;
   grid-template-columns: 190px 1fr;
   min-height: calc(100vh - 108px);
@@ -1884,7 +1884,7 @@ button {
     min-width: 0;
   }
 
-  .dashboard-shell {
+  .cockpit-shell {
     width: 100%;
     margin: 0;
   }
