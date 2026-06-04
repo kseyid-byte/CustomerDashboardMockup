@@ -223,7 +223,7 @@ function render() {
         <header class="app-header">
           <div>
             <p>Wholesale customer cockpit</p>
-            <h1>Customer Dashboard</h1>
+            <h1>Customer Cockpit</h1>
           </div>
           <div class="brand-lockup">
             <img src="./public/assets/syngenta-logo.svg" alt="Syngenta" />
@@ -270,7 +270,7 @@ function renderPlatformShell(content) {
           <button class="platform-section-title">Apps <span>⌄</span></button>
           <button class="platform-app-link ${state.platformView === "dashboard" ? "active" : ""}" data-action="open-customer-dashboard" type="button">
             <span class="platform-nav-icon">${platformIcon("head")}</span>
-            <span>Customer Dashboard</span>
+            <span>Customer Cockpit</span>
           </button>
         </section>
         <section class="platform-section platform-empty-section">
@@ -289,7 +289,7 @@ function renderPlatformShell(content) {
           <div class="platform-product-switcher">Lynx <span>Max</span> <small>⌄</small></div>
           <div class="platform-logo"><img src="./public/assets/lynx-eye.webp" alt="" /> Lynx</div>
         </header>
-        <section class="platform-app-canvas ${state.platformView === "chat" ? "chat-canvas" : ""}" aria-label="Customer Dashboard app">
+        <section class="platform-app-canvas ${state.platformView === "chat" ? "chat-canvas" : ""}" aria-label="Customer Cockpit app">
           ${content}
         </section>
       </main>

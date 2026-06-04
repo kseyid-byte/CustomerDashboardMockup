@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-06-04
+
+### Changed
+- Renamed "Customer Dashboard" to "Customer Cockpit" across the Lynx platform demo branch (UI header, app menu, title, README).
+
 ## 2026-06-01
 
 ### Changed
