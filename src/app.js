@@ -220,7 +220,7 @@ function render() {
       <header class="app-header">
         <div>
           <p>Wholesale customer cockpit</p>
-          <h1>Customer Dashboard</h1>
+          <h1>Customer Cockpit</h1>
         </div>
         <div class="brand-lockup">syngenta<span></span></div>
       </header>
