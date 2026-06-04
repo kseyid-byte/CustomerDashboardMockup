@@ -1081,15 +1081,15 @@ function renderChangelogPage() {
   const changelogUrl = "https://raw.githubusercontent.com/kseyid-byte/CustomerDashboardMockup/main/CHANGELOG.md";
   return `
     <div class="page-head">
-      <div><h2>Changes</h2><p>Simple changelog of dashboard updates.</p></div>
+      <div><h2>Changes</h2><p>Simple changelog of cockpit updates.</p></div>
     </div>
     <div class="mini-panel" id="changelog-container">
       <ul class="change-log-list">
         <li><strong>2026-05-28</strong> - Added hover overlay expansion for the scenario table in the pre-meeting prep account overview matrix so large tables can be viewed without resizing the layout. <em>Requested by: Shantanu</em></li>
         <li><strong>2026-05-28</strong> - Added hover expansion behavior and horizontal scroll hint for all scrollable tables to improve readability of wide matrices. <em>Requested by: Shantanu</em></li>
         <li><strong>2026-05-27</strong> - Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. <em>Requested by: Kerem Seyid</em></li>
-        <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so dashboard pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
-        <li><strong>2026-05-26</strong> — Added deployment delay banner at top of dashboard. <em>Requested by: Kerem S</em></li>
+        <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so cockpit pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
+        <li><strong>2026-05-26</strong> — Added deployment delay banner at top of cockpit. <em>Requested by: Kerem S</em></li>
         <li><strong>2026-05-26</strong> — Updated gross-to-net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>
         <li><strong>2026-05-26</strong> — Policy introduced: every change entry must include who requested it. <em>Requested by: Kerem S</em></li>
       </ul>
@@ -1434,7 +1434,7 @@ function renderFeatureList() {
     ["Interaction & health", "Track visit frequency & open commitments. Build composite health score per account based on revenue vs. plan, volume trend, product listing breadth, and stock rotation. Surface open actions with due dates and status"],
     ["Weather & external signals", "Surface weather events, as contextual overlay"],
     ["Smart alerts", "Trigger alerts on gaps to target, stock buildups, customer deviations, weather/market events, health score deterioration, and commitment overdue. Generate actionable proposals that feed directly into weekly planner and pre-meeting preparation"],
-    ["Customer data input", "Allow customers or KAM to submit sell-out data, stock levels, and mid-season product feedback directly into the dashboard"]
+    ["Customer data input", "Allow customers or KAM to submit sell-out data, stock levels, and mid-season product feedback directly into the cockpit"]
   ];
 
   return `
@@ -1706,7 +1706,7 @@ function renderInteractions(rows) {
         </div>
       </div>
       <div class="panel">
-        <div class="panel-header"><div><h3>Customer Feedback</h3><p>Direct input captured into the dashboard.</p></div><button class="btn primary" data-action="feedback">Submit</button></div>
+        <div class="panel-header"><div><h3>Customer Feedback</h3><p>Direct input captured into the cockpit.</p></div><button class="btn primary" data-action="feedback">Submit</button></div>
         <div class="panel-body action-list">
           ${state.data.feedback.map((item) => `
             <div class="item">

@@ -87,7 +87,7 @@ button {
   overflow: hidden;
 }
 
-.dashboard-frame.sidebar-collapsed {
+.cockpit-frame.sidebar-collapsed {
   grid-template-columns: 68px 1fr;
 }
 
@@ -1922,7 +1922,7 @@ button {
   }
 
   .dashboard-frame,
-  .dashboard-frame.sidebar-collapsed {
+  .cockpit-frame.sidebar-collapsed {
     display: block;
     min-height: 0;
     border-right: 0;
