@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "python3 -m http.server 5173",
-    "start": "python3 -m http.server 5173"
+    "dev": "python3 server.py",
+    "start": "python3 server.py"
   },
   "notes": {
     "future_stack": "This static mock is structured so it can be migrated to React + TypeScript + Vite when npm is available. The CSV data adapter in src/app.js is the Databricks replacement boundary."

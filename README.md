@@ -6,10 +6,21 @@ Operational sales cockpit mockup for sales reps, Key Account Managers, regional 
 
 ```bash
 cd /path/to/CustomerDashboardMockup
-python3 -m http.server 5173
+python3 server.py
 ```
 
 Open `http://localhost:5173`.
+
+## Databricks Apps
+
+This mockup is ready for a Git-backed Databricks App deployment from `main`.
+
+- `app.yaml` defines the Databricks runtime command: `python server.py`.
+- `server.py` serves the static frontend and reads `DATABRICKS_APP_PORT` at runtime.
+- Mock CSV data is bundled in `public/data`, so the app works without live Databricks tables today.
+- The future Databricks integration boundary is `loadDataProducts()` in `src/app.js`.
+
+Deploy from Git using branch `main` and the repository root as the source code path.
 
 ## Data Layer
 
