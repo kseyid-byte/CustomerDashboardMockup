@@ -214,9 +214,6 @@ function render() {
 
   app.innerHTML = `
     <div class="cockpit-shell">
-      <div class="deployment-delay-banner" role="status" aria-live="polite">
-        Changes can take a few minutes to show up for people testing the cockpit.
-      </div>
       <header class="app-header">
         <div>
           <p>Wholesale customer cockpit</p>
@@ -228,10 +225,23 @@ function render() {
     </div>
     ${renderDrawer()}
     ${renderModal()}
+    ${renderChatLauncher()}
     <div class="toast" id="toast"></div>
   `;
 
   bindEvents();
+}
+
+function renderChatLauncher() {
+  return `
+    <button class="chat-launcher" type="button" aria-label="Open cockpit chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.8 8.8 0 0 1-3.8-.9L3 20l1.1-4.7a8.2 8.2 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.9 8.4Z"></path>
+        <path d="M8 11h8"></path>
+        <path d="M8 14h5"></path>
+      </svg>
+    </button>
+  `;
 }
 
 function renderEmbeddedDashboard(rows, metrics) {
@@ -1089,7 +1099,6 @@ function renderChangelogPage() {
         <li><strong>2026-05-28</strong> - Added hover expansion behavior and horizontal scroll hint for all scrollable tables to improve readability of wide matrices. <em>Requested by: Shantanu</em></li>
         <li><strong>2026-05-27</strong> - Fixed mobile layout for pre-meeting prep product trend panels so table contents fit inside the card. <em>Requested by: Kerem Seyid</em></li>
         <li><strong>2026-05-27</strong> - Added mobile-friendly layout rules so cockpit pages stack cleanly on phone-width screens while preserving the desktop mockup. <em>Requested by: Kerem Seyid</em></li>
-        <li><strong>2026-05-26</strong> — Added deployment delay banner at top of cockpit. <em>Requested by: Kerem S</em></li>
         <li><strong>2026-05-26</strong> — Updated gross-to-net waterfall colors (gross: yellow, deductions/net: black). <em>Requested by: Kerem S</em></li>
         <li><strong>2026-05-26</strong> — Policy introduced: every change entry must include who requested it. <em>Requested by: Kerem S</em></li>
       </ul>
