@@ -35,6 +35,8 @@ const state = {
   activeView: "Cockpit",
   activePage: "overview",
   sidebarCollapsed: false,
+  chatOpen: false,
+  chatMessages: [],
   expandedMonths: ["2026-05"],
   selectedAccountId: null
 };
@@ -233,15 +235,67 @@ function render() {
 }
 
 function renderChatLauncher() {
+  const messages = [
+    { role: "bot", text: "Ask me about sales, accounts, orders, weather signals, or pre-meeting prep." },
+    ...state.chatMessages
+  ];
   return `
-    <button class="chat-launcher" type="button" aria-label="Open cockpit chat">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.8 8.8 0 0 1-3.8-.9L3 20l1.1-4.7a8.2 8.2 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.9 8.4Z"></path>
-        <path d="M8 11h8"></path>
-        <path d="M8 14h5"></path>
-      </svg>
-    </button>
+    <div class="chat-widget ${state.chatOpen ? "open" : ""}">
+      ${state.chatOpen ? `
+        <section class="chat-panel" aria-label="Cockpit chat">
+          <div class="chat-panel-head">
+            <div>
+              <strong>Cockpit assistant</strong>
+              <span>Mock chat experience</span>
+            </div>
+            <button type="button" data-action="toggle-chat" aria-label="Close cockpit chat">×</button>
+          </div>
+          <div class="chat-messages">
+            ${messages.map((message) => `
+              <div class="chat-message ${message.role}">
+                <span>${message.typing ? typingDots() : escapeHtml(message.text)}</span>
+              </div>
+            `).join("")}
+          </div>
+          <form class="chat-form" id="cockpit-chat-form">
+            <input id="cockpit-chat-input" autocomplete="off" placeholder="Ask about this cockpit..." />
+            <button type="submit" aria-label="Send cockpit chat message">↑</button>
+          </form>
+        </section>
+      ` : `
+        <button class="chat-launcher" type="button" data-action="toggle-chat" aria-label="Open cockpit chat">
+          ${chatIcon()}
+        </button>
+      `}
+    </div>
   `;
+}
+
+function chatIcon() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.8 8.8 0 0 1-3.8-.9L3 20l1.1-4.7a8.2 8.2 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.9 8.4Z"></path>
+      <path d="M8 11h8"></path>
+      <path d="M8 14h5"></path>
+    </svg>
+  `;
+}
+
+function typingDots() {
+  return `
+    <span class="typing-dots" aria-label="typing">
+      <i></i><i></i><i></i>
+    </span>
+  `;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function renderEmbeddedDashboard(rows, metrics) {
@@ -1907,6 +1961,10 @@ function bindEvents() {
         state.sidebarCollapsed = !state.sidebarCollapsed;
         render();
       }
+      if (action === "toggle-chat") {
+        state.chatOpen = !state.chatOpen;
+        render();
+      }
       if (action === "close-drawer") {
         state.selectedAccountId = null;
         render();
@@ -1923,6 +1981,25 @@ function bindEvents() {
     event.preventDefault();
     saveModalAction();
   });
+
+  const chatForm = document.querySelector("#cockpit-chat-form");
+  if (chatForm) {
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      sendChatMessage();
+    });
+  }
+}
+
+function sendChatMessage() {
+  const input = document.querySelector("#cockpit-chat-input");
+  const text = input?.value.trim();
+  if (!text) return;
+
+  state.chatMessages.push({ role: "user", text });
+  state.chatMessages.push({ role: "bot", text: "", typing: true });
+  state.chatOpen = true;
+  render();
 }
 
 function openActionModal(title, kind) {
