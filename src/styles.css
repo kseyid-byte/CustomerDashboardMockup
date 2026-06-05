@@ -1684,23 +1684,14 @@ button {
 .brand-lockup {
   justify-self: end;
   align-self: end;
-  position: relative;
-  padding-right: 6px;
-  color: #0766b1;
-  font-weight: 800;
-  font-size: 30px;
-  letter-spacing: 0;
+  display: flex;
+  align-items: center;
 }
 
-.brand-lockup span {
-  position: absolute;
-  right: 38px;
-  top: -11px;
-  width: 16px;
-  height: 10px;
-  border-radius: 70% 0 70% 0;
-  background: #00a651;
-  transform: rotate(-30deg);
+.brand-lockup img {
+  display: block;
+  width: 138px;
+  height: auto;
 }
 
 .drawer {
@@ -2098,14 +2089,11 @@ button {
   }
 
   .brand-lockup {
-    font-size: 22px;
+    align-self: center;
   }
 
-  .brand-lockup span {
-    right: 29px;
-    top: -8px;
-    width: 12px;
-    height: 8px;
+  .brand-lockup img {
+    width: 118px;
   }
 
   .dashboard-frame,

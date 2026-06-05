@@ -221,7 +221,9 @@ function render() {
           <p>Wholesale customer cockpit</p>
           <h1>Customer Cockpit</h1>
         </div>
-        <div class="brand-lockup">syngenta<span></span></div>
+        <div class="brand-lockup">
+          <img src="./public/assets/syngenta-logo.svg" alt="Syngenta" />
+        </div>
       </header>
       ${renderEmbeddedDashboard(rows, metrics)}
     </div>
