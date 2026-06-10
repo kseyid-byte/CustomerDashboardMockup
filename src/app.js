@@ -287,7 +287,7 @@ function renderPlatformShell(content) {
       <main class="platform-main">
         <header class="platform-topbar">
           <div class="platform-product-switcher">Lynx <span>Max</span> <small>⌄</small></div>
-          <div class="platform-logo"><img src="./public/assets/lynx-eye.webp" alt="" /> Lynx</div>
+          <div class="platform-logo"><img src="./public/assets/lynx-eye.webp" alt="" /> Luix</div>
         </header>
         <section class="platform-app-canvas ${state.platformView === "chat" ? "chat-canvas" : ""}" aria-label="Customer Cockpit app">
           ${content}
