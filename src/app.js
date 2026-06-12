@@ -2185,6 +2185,7 @@ function sendDashboardChatMessage() {
   state.dashboardChatMessages.push({ role: "user", text });
   state.dashboardChatMessages.push({ role: "bot", text: "typing..." });
   state.dashboardChatOpen = true;
+  input.value = "";
   render();
 }
 
