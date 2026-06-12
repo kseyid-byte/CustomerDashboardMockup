@@ -409,7 +409,7 @@ function renderDashboardChatWidget() {
           <div class="dashboard-chat-messages">
             ${messages.map((message) => `
               <div class="dashboard-chat-message ${message.role}">
-                <span>${escapeHtml(message.text)}</span>
+                <span>${message.text === "typing..." ? '<div class="typing-dots"><span></span><span></span><span></span></div>' : escapeHtml(message.text)}</span>
               </div>
             `).join("")}
           </div>

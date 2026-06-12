@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-12
+
+### Added
+- Animated typing indicator (three moving dots) for the Customer Cockpit dashboard chatbot while the bot response is in "typing" state.
+
+### Changed
+- Replaced static "typing..." text with animated dot loader in the dashboard chat widget UI.
+
 ## 2026-06-04
 
 ### Changed
