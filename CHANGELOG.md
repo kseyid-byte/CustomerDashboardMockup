@@ -7,6 +7,7 @@
 
 ### Changed
 - Replaced static "typing..." text with animated dot loader in the dashboard chat widget UI.
+- Fixed typing animation rendering so the dots display and animate correctly inside the chat bubble.
 
 ## 2026-06-04
 
